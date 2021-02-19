@@ -1,35 +1,61 @@
 {
-  "name": "taquito-boilerplate-app",
-  "version": "1.0.0",
-  "description": "A boilerplate app for creating a DApp using Taquito",
-  "main": "index.js",
+  "name": "beacon-vue-example",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "watch": "parcel src/index.html",
-    "clean": "rm -rf dist",
-    "build": "npm run clean && parcel build ./src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ecadlabs/taquito-boilerplate-app.git"
-  },
-  "keywords": [
-    "tezos",
-    "taquito",
-    "ts",
-    "typescript",
-    "dapp",
-    "blockchain"
-  ],
-  "author": "ECAD Labs Inc.",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/jquery": "^3.5.0",
-    "jquery": "^3.5.1",
-    "parcel-bundler": "^1.12.4",
-    "typescript": "^3.9.5"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
-    "@taquito/taquito": "^7.1.0-beta.0"
-  }
+    "@airgap/beacon-sdk": "^2.2.1",
+    "@taquito/beacon-wallet": "^8.0.1-beta.1",
+    "@taquito/signer": "^8.0.1-beta.1",
+    "@taquito/taquito": "^8.0.1-beta.1",
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.114",
+    "@types/libsodium-wrappers": "^0.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-plugin-typescript": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.0.5",
+    "typescript": "~3.9.3",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/typescript/recommended",
+      "@vue/prettier",
+      "@vue/prettier/@typescript-eslint"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

@@ -1,3 +1,8 @@
-import { App } from './app';
+import Vue from "vue";
+import App from "./App.vue";
 
-new App().initUI();
+Vue.config.productionTip = false;
+
+new Vue({
+  render: (h) => h(App),
+}).$mount("#app");
