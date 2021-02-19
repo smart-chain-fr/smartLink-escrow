@@ -101,8 +101,9 @@ export default class Escrow extends Vue {
           bought : false
       },
   ]
-  private beaconClient = new DAppClient({
-    name: "Vue DApp",
+  
+    private wallet = new BeaconWallet({
+    name: "Escrow DApp",
     eventHandlers: {
       // Overwrite standard behavior of certain events
       [BeaconEvent.PAIR_INIT]: {
@@ -115,20 +116,18 @@ export default class Escrow extends Vue {
     },
   });
 
+
   // Showcase the Taquito Wallet API
   // In a real application, we wouldn't initialize the wallet in a method
   // but in a service, so it only happens once.
   async updateExchangeTypes() {
-    const wallet = new BeaconWallet({ name: "Taquito DApp" });
-    Tezos.setWalletProvider(wallet);
+    Tezos.setWalletProvider(this.wallet);
     // Request permissions
-    await wallet.requestPermissions({network : { type : NetworkType.DELPHINET }});
-
+    await this.wallet.requestPermissions({network : { type : NetworkType.DELPHINET }});
     // Get contract
     const contract = await Tezos.wallet.at(
       "KT1Sk5CfTfoNtqCC9UFSGVL1J4ErjYHkqHRW"
     );
-    
     // Call a method on a contract
     const result = await contract.methods
       .updateEscrowType(
@@ -144,20 +143,18 @@ export default class Escrow extends Vue {
   // In a real application, we wouldn't initialize the wallet in a method
   // but in a service, so it only happens once.
   async buy(item: any) {
-    const wallet = new BeaconWallet({ name: "Taquito DApp" });
-    Tezos.setWalletProvider(wallet);
-    // Request permissions
-    await wallet.requestPermissions({network : { type : NetworkType.DELPHINET }});
-
-    // Get contract
-    const contract = await Tezos.wallet.at(
-      "KT1Sk5CfTfoNtqCC9UFSGVL1J4ErjYHkqHRW"
-    );
     const commission : number = item.price*3
     const slashing : number = item.price*5
     const total : number = (item.price*100 + commission + slashing)/100
 
-    console.log(total)
+    Tezos.setWalletProvider(this.wallet);
+    // Request permissions
+    await this.wallet.requestPermissions({network : { type : NetworkType.DELPHINET }});
+    // Get contract
+    const contract = await Tezos.wallet.at(
+      "KT1Sk5CfTfoNtqCC9UFSGVL1J4ErjYHkqHRW"
+    );
+
     // Call a method on a contract
     const result = await contract.methods
       .addNewExchange(
