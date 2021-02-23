@@ -22,6 +22,7 @@
         </div>
     </div>
 
+     <a href="/escrow" class="nav-link">Add</a>
     
     <br />
 

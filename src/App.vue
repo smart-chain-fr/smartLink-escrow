@@ -1,18 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/beacon_logo.svg" />
-    <Escrow />
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="navbar-nav mr-auto">
+         <router-view />
+      </div>
+    </nav>
+
   </div>
 </template>
 
+
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Beacon from "./components/Beacon.vue";
+import Home from "./components/Home.vue";
 import Escrow from "./components/Escrow.vue";
 
 @Component({
   components: {
-    Beacon,
+    Home,
     Escrow,
   },
 })

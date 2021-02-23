@@ -1,60 +1,7 @@
 <template>
   <div class="hello">
-    <h3>Demo 1 - Request Permission</h3>
-    <br />
-    <button v-on:click="requestPermission">Request Permission</button>
-    <br />
-
-    <span v-if="address">
-      {{ address }}
-      <br />
-      {{ scopes }}
-    </span>
-
-    <h3>Demo 2 - Send Operation Request</h3>
-    <br />
-    <button v-on:click="requestOperation">Delegate Operation</button>
-    <br />
-
-    {{ operationHash }}
-
-    <h3>Demo 3 - Contract Call</h3>
-    <br />
-    <input 
-      type="receiver_address"
-      placeholder="Enter task..."
-      v-model="receiverAddress"
-    >
-    <button v-on:click="callContract">Call Contract</button>
-    <br />
-
-    {{ taquitoOperationHash }}
-
-    <h3>Links</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/airgap-it/beacon-vue-example"
-          target="_blank"
-          rel="noopener"
-          >Github</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/airgap-it/beacon-sdk"
-          target="_blank"
-          rel="noopener"
-          >Beacon SDK</a
-        >
-      </li>
-      
-      <li>
-        <a href="https://www.walletbeacon.io/" target="_blank" rel="noopener"
-          >walletbeacon.io</a
-        >
-      </li>
-    </ul>
+    <h3>Home page</h3>
+    <a href="/escrow" class="nav-link">Go to Escrow</a>
   </div>
 </template>
 
