@@ -1,0 +1,105 @@
+.v-sheet.v-card
+{
+    border-radius: 20px;
+}
+
+.v-application .elevation-12
+{
+    box-shadow: 0px 0px 9px 0px #f0f2f9 !important;
+}
+
+.prerequisites
+{
+    padding: 12px 40px;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.prerequisites h4
+{
+    padding-bottom: 10px;
+    font-weight: normal;
+}
+
+.prerequisites .v-divider
+{
+    margin: 40px 8px;
+    opacity: 0.6;
+}
+//4d5882
+
+.prerequisites .title
+{
+    margin-bottom: 15px;
+}
+
+.prerequisites .subitems-title
+{
+    margin-bottom: 15px;
+    
+}
+
+.prerequisites .subitems-title .subtitle-1
+{
+    font-weight: bold;
+}
+
+.wallet
+{
+    padding:5px;
+    background: #f3f3f3;
+    border-radius: 30px;
+    opacity: 0.75;
+}
+
+.category
+{ 
+    background: #f5f7fa;
+    border-radius: 20px;
+    padding:20px;
+    margin:15px;
+
+}
+
+.category .title
+{
+    color:#4b5580;
+}
+
+.category .label, .category p
+{
+    color:#545379;
+}
+
+.category hr
+{
+   border: 1px dashed #ddd;
+    margin: 10px 0px 20px 0px;
+}
+
+.category button
+{
+    color: white;
+}
+
+.category a
+{
+    color: white;
+}
+
+.prerequisites button
+{
+    color: #5a6099;
+    margin-top: 15px;
+}
+
+.loading .v-progress-circular
+{
+    margin-top: -10px;
+    margin-right: 10px;
+}
+
+.loading 
+{
+    margin-top: -10px;
+    color:#5a6099;
+}
