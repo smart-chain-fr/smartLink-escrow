@@ -79,7 +79,7 @@
                           rounded
                            type="submit"
                           :disabled = "contractAddress.length < 1"
-                          :href="`/buy/${contractAddress}`"
+                          :href="`/sales/${contractAddress}`"
                           >
                         
                           Run contract
@@ -112,7 +112,7 @@
                             depressed
                             color="forward"
                             rounded
-                            :href="`/buy/${contractAddress}`"
+                            :href="`/sales/${contractAddress}`"
                           >
                           
                             Go to escrow
