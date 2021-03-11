@@ -23,8 +23,6 @@ export default class Sales extends Vue {
     public commissions_temp:any = {}
     public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
     
-    
-
     async removeBoughtItems()
     {
         const filterMap = await Promise.all(

@@ -72,7 +72,10 @@
                 <td class="text-center">{{ item.seller }}</td>
 
                 <td class="text-center">
-                  {{ item.total }} c
+                  {{ item.total }} <img
+                      :src="require(`../../assets/tezos.png`)"
+                      width="10px"
+                    />
                   <br />
                   <span class="fees"
                     >(Fees: {{ item.fees }}

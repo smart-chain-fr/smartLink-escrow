@@ -8,9 +8,10 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 export default class contractUtils{
     public contractAddress : string;
-
+    
     constructor(contractAddress:string){
         this.contractAddress = contractAddress
+
     }
 
     public async getContractStorage()
@@ -33,10 +34,63 @@ export default class contractUtils{
         return commission.toNumber();
     }
 
-    async isTheItemBought(id:string)
+    public async getAllExchanges()
     {
         const storage = await this.getContractStorage();
         const ongoing_exchanges = await storage.exchanges;
+        return ongoing_exchanges;
+    }
+
+    public async getAllItemsWaitingForTransfer()
+    {
+        //let items : Array<string> = []
+        let items = new Map()
+        const ongoing_exchanges = await this.getAllExchanges()
+        const keys = ongoing_exchanges.keyMap.keys()
+        for(const key of keys)
+        {
+            let item = ongoing_exchanges.get(key.replace(/"/g,""))
+            if(typeof item !== 'undefined')
+            {
+                if(item.state === "WAITING_FOR_TRANSFER")
+                { 
+                    //items.push(key.replace(/"/g,""))
+                    items.set(key.replace(/"/g,""), item.paid_price.escrow.toNumber()/1000000)
+                }
+            }
+            
+        }
+
+        return items;
+        
+    }
+
+    public async getAllItemsWaitingForValidation()
+    {
+        //let items : Array<string> = []
+        let items = new Map()
+        const ongoing_exchanges = await this.getAllExchanges()
+        const keys = ongoing_exchanges.keyMap.keys()
+        for(const key of keys)
+        {
+            let item = ongoing_exchanges.get(key.replace(/"/g,""))
+            if(typeof item !== 'undefined')
+            {
+                if(item.state === "WAITING_FOR_VALIDATION")
+                { 
+                    //items.push(key.replace(/"/g,""))
+                    items.set(key.replace(/"/g,""), item.paid_price.escrow.toNumber()/1000000)
+                }
+            }
+            
+        }
+
+        return items;
+    }
+
+    public async isTheItemBought(id:string)
+    {
+        const ongoing_exchanges = await this.getAllExchanges()
         const exchange = await ongoing_exchanges.get(id)
         let result = false;
         
@@ -44,7 +98,7 @@ export default class contractUtils{
         {
             result = true;
         }
-        else if (storage.exchanges.get(id).state === "CANCELLED")
+        else if (ongoing_exchanges.get(id).state === "CANCELLED")
         {
             result = true;
         }

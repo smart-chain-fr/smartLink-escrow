@@ -11,5 +11,16 @@ var Tezos = new taquito_1.TezosToolkit("https://edonet.smartpy.io");
 var contract = Tezos.contract.at("KT1H8kLur4dn82HPD8Lu9w2g9fkWSCMTTPHt")
     .then(function (contract) {
     contract.storage()
-        .then(function (storage) { console.log(storage.exchanges.get("1").state); storage.exchanges.get("1").then(function(result) { console.log(result)}); }).catch(function(error) { console.log(error)});
+        .then(function (storage) {
+            const ongoing_exchanges = storage.exchanges
+            const size = ongoing_exchanges.valueMap.values();
+            //console.log(size)
+            const keys = ongoing_exchanges.keyMap.keys()
+            for(const key of keys)
+            {
+                let blb = key.replace(/"/g,"")
+                
+                console.log(ongoing_exchanges.get(key.replace(/"/g,"")).paid_price.escrow.toNumber())
+            }
+        });
 });
