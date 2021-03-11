@@ -3,9 +3,10 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 class User extends VuexModule {
   public contractAddress: string = ''
   public isOwner: boolean = false
-  
+
   @Mutation
   public setContract(contractAddress: string): void {
+    contractAddress.replaceAll(/\s/g,'')
     this.contractAddress = contractAddress
   }
   @Mutation

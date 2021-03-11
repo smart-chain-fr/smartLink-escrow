@@ -1,5 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import goodsToBuy from "../../demo-data/goods-to-buy.json"
+import contractUtils from "../../contract/utils"
 
 import { TezosToolkit } from "@taquito/taquito"
 import moment from "moment"
@@ -12,59 +13,23 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 export default class Sales extends Vue {
 
     public drawer = true;
+
+    public slashing_rate = 0
     public loadTable = true;
     public data = goodsToBuy;
     public error = false;
-    public slashing_rate = 0;
     public headers = ["Product", "Seller", "Total", ""];
     public period : string | null = "";
     public commissions_temp:any = {}
-   
+    public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
     
-
-    async getContractStorage()
-    {
-        const contract = await Tezos.contract.at(this.$store.state.user.contractAddress);
-        const storage:any = await contract.storage();
-        return storage;
-    }
-    async getSlashingRate()
-    {
-        const storage = await this.getContractStorage();
-        const slashing_rate = storage.slashing_rate.toNumber();
-        this.slashing_rate = slashing_rate;
-    }
-
-    async getCommissionFromContract(escrow_type:string)
-    {
-        const storage = await this.getContractStorage();
-        const commission = await storage.escrow_types.get(escrow_type);
-        return commission.toNumber();
-    }
-
-    async isTheItemBought(id:string)
-    {
-        const storage = await this.getContractStorage();
-        const ongoing_exchanges = await storage.exchanges;
-        const exchange = await ongoing_exchanges.get(id)
-        let result = false;
-        
-        if (typeof exchange === 'undefined')
-        {
-            result = true;
-        }
-        else if (storage.exchanges.get(id).state === "CANCELLED")
-        {
-            result = true;
-        }
-        return result;
-    }
+    
 
     async removeBoughtItems()
     {
         const filterMap = await Promise.all(
             this.data.map(async data => {
-              return await this.isTheItemBought(data.id);
+              return await this.contractUtils.isTheItemBought(data.id);
             }),
           );
 
@@ -81,7 +46,7 @@ export default class Sales extends Vue {
         }
         else
         {
-            commission = await this.getCommissionFromContract(data_type);
+            commission = await this.contractUtils.getCommissionFromContract(data_type);
             this.commissions_temp[data_type] = commission;
         }
 
@@ -91,7 +56,6 @@ export default class Sales extends Vue {
 
     async updateData()
     {
-              
         // Removing all bought items
         this.data = await this.removeBoughtItems();
 
@@ -99,7 +63,7 @@ export default class Sales extends Vue {
         {           
             let commission = await this.getCommission(this.data[i].type)
             let fees = this.data[i].shipping + this.data[i].price * (this.slashing_rate/100) + this.data[i].price* (commission/100)
-           console.log(this.commissions_temp)
+            console.log(this.commissions_temp)
             Object.assign(this.data[i], {
                 fees : fees.toFixed(2),
                 total : this.data[i].price + fees
@@ -108,7 +72,7 @@ export default class Sales extends Vue {
     }
 
     async beforeMount() {
-        await this.getSlashingRate();
+        this.slashing_rate = await this.contractUtils.getSlashingRate();
         await this.updateData();
         this.loadTable= false;
     }

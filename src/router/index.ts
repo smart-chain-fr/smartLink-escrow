@@ -21,7 +21,7 @@ const routes: RouteConfig[] = [
     props: true
   },
   {
-    path: '/buy/',
+    path: '/buy/:id',
     name: 'buy',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

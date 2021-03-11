@@ -1,0 +1,123 @@
+.v-toolbar
+{
+  box-shadow: none!important;
+}
+
+.running-contract
+{
+  color: #8988a9;
+  font-size:12px;
+}
+
+.v-navigation-drawer
+{
+  background-color: #fefefe;
+}
+
+.v-app-bar-title{
+  color: #2e2f33;
+}
+  
+.v-main
+{
+  padding: 10px!important;
+}
+
+.chip
+{
+    font-weight: bold;
+    color:#3d3b6d;
+    margin-bottom: 10px;
+}
+
+.items
+{
+  background: #ebedf4;
+  padding: 20px;
+  border-radius:15px;
+}
+
+.items .date
+{
+  font-size:12px;
+  font-family: monospace;
+  color: #9b9ab7;
+}
+
+
+.items .name
+{
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.items .seller {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #9b9ab7;
+  font-family: monospace;
+}
+
+.item
+{
+    /* width:100%; */
+    /* margin-left: auto;
+    margin-right: auto; */
+    border-radius: 25px;
+    padding:40px 40px 0px 40px;
+    background: white;
+}
+
+.items .title 
+{
+    margin: 0px 0px 15px 20px ;
+}
+
+.banner
+{
+    padding: 10px 5px; 
+}
+
+.item .description
+{
+    background-color: #f1f3ff;
+    color: #8d8cae;
+    border-radius: 20px;
+    padding:15px;
+}
+
+.item .prices
+{
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 0px;
+}
+
+.item .prices .subtitle-1
+{
+    font-weight: bold;
+    color:#3d3b6d;
+}
+
+.item .prices .price
+{
+    font-family: monospace;
+}
+
+.navigation-buttons
+{
+    padding: 30px 0px 0px 5px;
+    color:white;
+}
+
+.navigation-buttons button, .navigation-buttons a
+{
+    color: white;
+}
+
+.total {
+    background: #e7daff;
+    padding: 12px;
+    border-radius: 20px;
+}

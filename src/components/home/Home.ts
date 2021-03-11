@@ -34,6 +34,8 @@ export default class Home extends Vue {
 
     @user.State
     public contractAddress!: string
+
+    public contract = ""
   
     @user.Action
     public updateContract!: (contractAddress: string) => void
