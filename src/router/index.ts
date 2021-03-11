@@ -8,23 +8,26 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    props: true
   },
   {
-    path: '/sales/:address',
+    path: '/sales/',
     name: 'sales',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/sales/Sales.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/sales/Sales.vue'),
+    props: true
   },
   {
-    path: '/buy/:address',
+    path: '/buy/',
     name: 'buy',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/buy/Buy.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/buy/Buy.vue'), 
+    props: true
   }
 ];
 

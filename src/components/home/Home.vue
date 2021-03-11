@@ -68,8 +68,7 @@
                           filled
                           rounded
                           dense
-                          type ="contractAddress"
-                          v-model="contractAddress"
+                          :value="contractAddress" @keydown="updateContract($event.target.value)" 
                         
                         ></v-text-field>
                         <div class="text-center">
@@ -77,9 +76,9 @@
                           depressed
                           color="forward"
                           rounded
-                           type="submit"
+                          type="submit"
                           :disabled = "contractAddress.length < 1"
-                          :href="`/sales/${contractAddress}`"
+                          :href="`/sales/`"
                           >
                         
                           Run contract
@@ -112,7 +111,7 @@
                             depressed
                             color="forward"
                             rounded
-                            :href="`/sales/${contractAddress}`"
+                            :href="`/sales/`"
                           >
                           
                             Go to escrow

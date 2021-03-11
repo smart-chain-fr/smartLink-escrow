@@ -7,9 +7,11 @@ import {
   import { TezosToolkit } from "@taquito/taquito";
   import { BeaconWallet } from "@taquito/beacon-wallet";
   import contractCode from "../../contract/Escrow-contract.json"
-
+  import { namespace } from 'vuex-class'
+  
+  const user = namespace('user')
   const Tezos = new TezosToolkit('https://edonet.smartpy.io')
-
+  
 @Component
 export default class Home extends Vue {
 
@@ -21,16 +23,20 @@ export default class Home extends Vue {
         5: "https://spirewallet.com/",
         6: "https://templewallet.com/"
     }
-
+    
     public step = 1;
-
-    public contractAddress: string | null = "";
 
     public originating = false;
 
     public originatingCompleted = false;
 
     public address: string | null = "";
+
+    @user.State
+    public contractAddress!: string
+  
+    @user.Action
+    public updateContract!: (contractAddress: string) => void
 
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
@@ -81,10 +87,10 @@ export default class Home extends Vue {
         this.originating = true;
         
         const contract = await originationOp.contract();
-        this.contractAddress = contract.address;
+        //this.contractAddress = contract.address;
+        this.updateContract(contract.address)
         this.originating = false;
         this.originatingCompleted = true;
     }
-    
 
 }

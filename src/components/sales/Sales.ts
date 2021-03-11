@@ -3,7 +3,9 @@ import goodsToBuy from "../../demo-data/goods-to-buy.json"
 
 import { TezosToolkit } from "@taquito/taquito"
 import moment from "moment"
-
+import { namespace } from 'vuex-class'
+  
+const user = namespace('user')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component
@@ -17,11 +19,12 @@ export default class Sales extends Vue {
     public headers = ["Product", "Seller", "Total", ""];
     public period : string | null = "";
     public commissions_temp:any = {}
-    public contract = this.$route.params.address
+   
+    
 
     async getContractStorage()
     {
-        const contract = await Tezos.contract.at(this.contract);
+        const contract = await Tezos.contract.at(this.$store.state.user.contractAddress);
         const storage:any = await contract.storage();
         return storage;
     }
@@ -131,4 +134,5 @@ export default class Sales extends Vue {
         }
         
       }
+  
 }

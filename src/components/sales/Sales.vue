@@ -6,7 +6,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>Sales</v-app-bar-title>
       <v-spacer></v-spacer>
-      <span class="running-contract">Running contract: <code>{{ contract }}</code></span>
+      <span class="running-contract">Running contract: <code>{{ this.$store.state.user.contractAddress }}</code></span>
     </v-app-bar>
     <v-main >
       <v-container fluid>
@@ -80,7 +80,7 @@
                 <br />
                 <span class="fees">(Fees:  {{ item.fees }} <img :src="require(`../../assets/tezos.png`)" width="6px" />)</span></td>
               <td class="text-center">
-                <v-btn depressed color="primary">
+                <v-btn depressed color="primary" :href="`/buy/`">
                     Buy
                 </v-btn>
               </td>
