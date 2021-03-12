@@ -18,6 +18,7 @@ export default class Buy extends Vue {
     public drawer = true;
 
     public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
+    public storage:any;
     public info = {
         "DOMAIN_NAME": {
             color: "primary",
@@ -59,11 +60,12 @@ export default class Buy extends Vue {
 
     async beforeMount()
     {
+        this.storage = await this.contractUtils.getContractStorage()
         if (typeof this.data !== 'undefined')
         {
-            this.isItemAvailable = await this.contractUtils.isTheItemBought(this.id)
-            this.commission = await this.contractUtils.getCommissionFromContract(this.data!.type);
-            this.slashing_rate = await this.contractUtils.getSlashingRate();
+            this.isItemAvailable =  this.contractUtils.isTheItemBought(this.storage, this.id)
+            this.commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.type);
+            this.slashing_rate =  this.contractUtils.getSlashingRate(this.storage);
             this.fees = this.data!.price*(this.slashing_rate/100) + this.data!.price*(this.commission/100)
             this.total = this.data!.price + this.fees
         }

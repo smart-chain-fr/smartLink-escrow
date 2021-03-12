@@ -20,10 +20,12 @@ export default class Sales extends Vue {
     public itemsWaitingForValidation = new Map()
     public itemsWaitingForTransfer = new Map()
     public headers = ["Item", "Escrowed amount", ""]
+    public storage:any;
     async beforeMount()
     {
-        this.itemsWaitingForTransfer = await this.contractUtils.getAllItemsWaitingForTransfer()
-        this.itemsWaitingForValidation = await this.contractUtils.getAllItemsWaitingForValidation()
+        this.storage = await this.contractUtils.getContractStorage();
+        this.itemsWaitingForTransfer = this.contractUtils.getAllItemsWaitingForTransferWithBuyer(this.storage)
+        this.itemsWaitingForValidation = this.contractUtils.getAllItemsWaitingForValidationWithBuyer(this.storage)
     }
 
     
@@ -33,14 +35,14 @@ export default class Sales extends Vue {
         if ( type === "transfer")
         {
             let data = this.data.filter(data => Array.from(this.itemsWaitingForTransfer.keys()).includes(data.id))
-            data.map(data => Object.assign(data, { total : this.itemsWaitingForTransfer.get(data.id)}))
+            data.map(data => Object.assign(data, this.itemsWaitingForTransfer.get(data.id)))
             return data
         
         }
         else if (type === "validation")
         {
             let data = this.data.filter(data => Array.from(this.itemsWaitingForValidation.keys()).includes(data.id))
-            data.map(data => Object.assign(data, { total : this.itemsWaitingForValidation.get(data.id)}))
+            data.map(data => Object.assign(data, this.itemsWaitingForValidation.get(data.id)))
             return data
         }   
         else 
