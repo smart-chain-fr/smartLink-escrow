@@ -64,7 +64,7 @@
                     <v-col cols="auto"
                       ><span class="name">{{ item.name }}</span
                       ><br /><span class="date"
-                        >Posted on {{ item.date }}</span
+                        >Posted on {{ new Date(item.date).toLocaleString() }}</span
                       ></v-col
                     ></v-row
                   >

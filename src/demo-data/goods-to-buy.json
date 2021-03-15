@@ -7,7 +7,6 @@
         "date":"03/03/2021 14:55",
         "id":"1",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "bought":false,
         "picture":"dm.png"
     }, 
     {
@@ -15,10 +14,9 @@
         "type":"DOMAIN_NAME",
         "price":17,
         "shipping":0,
-        "date":"03/09/2021 18:07",
+        "date":"03/15/2021 07:04",
         "id":"2",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "bought":false,
         "picture": "dm.png"
     }, 
     {
@@ -26,10 +24,9 @@
         "type":"OBJECT",
         "price":100,
         "shipping":5,
-        "date":"03/14/2021 18:07",
+        "date":"03/14/2021 9:28",
         "id":"3",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "bought":false,
         "picture": "car.png"
     },
     {
@@ -37,10 +34,9 @@
         "type":"OBJECT",
         "price":490,
         "shipping":30,
-        "date":"03/22/2021 10:07",
+        "date":"03/22/2021 22:17",
         "id":"4",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "bought":false,
         "picture": "notebook.png"
     },
     {
@@ -51,7 +47,6 @@
         "date":"03/27/2021 18:07",
         "id":"5",
         "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
-        "bought":false,
         "picture": "service.png"
     }
 ]

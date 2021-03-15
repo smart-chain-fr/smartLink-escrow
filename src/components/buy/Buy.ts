@@ -25,7 +25,7 @@ export default class Buy extends Vue {
             name: "Domain name",
             description: "Until the domain name has been transferred by the Seller to the Buyer, SmartLink's smart contract will hold the payment. SmartLink is connected to the WHOIS database and ensures a seemless transfer for both parties."
         },
-        "OHTER": {
+        "OTHER": {
             name: "Other",
             description: "Until the transferred has been confirmed by the Seller to the Buyer, SmartLink's smart contract will hold the payment."
         },
@@ -43,6 +43,8 @@ export default class Buy extends Vue {
     public slashing_rate = 0
     public fees = 0
     public total = 0
+    public isPaymentInProcess= false;
+    public isPaymentSuccessful= false;
 
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
@@ -75,21 +77,48 @@ export default class Buy extends Vue {
 
     async buy()
     {
+        this.isPaymentInProcess = true;
         Tezos.setWalletProvider(this.wallet);
         // Request permissions
-        await this.wallet.client.requestPermissions({network : { type : NetworkType.EDONET }});
-        const contract = await  Tezos.wallet.at(this.$store.state.user.contractAddress)
-        
-        const transaction = await contract.methods.addNewExchange(
+        await this.wallet.client.requestPermissions({network : { type : NetworkType.EDONET }})
+          .then(()=> Tezos.wallet.at(this.$store.state.user.contractAddress))
+          .then((contract)=>
+            contract.methods.addNewExchange(
             this.data!.type,
             this.data!.id,
             this.data!.name,
-            this.data!.price,
+            this.data!.price*1000000,
             this.data!.seller
-        )
+          ))
+          .then((transaction)=>transaction.send({amount: this.total}))
+          .then((operation)=>operation.confirmation())
+          .then(()=>{
+            this.isPaymentSuccessful = true;
+            this.isPaymentInProcess = false;
+          })
+          .catch((error)=>{console.log(error);this.isPaymentSuccessful = false; this.isPaymentInProcess = false;});
+          
+       /*  if(this.isPaymentInProcess) {
+          const contract = await Tezos.wallet.at(this.$store.state.user.contractAddress)
         
-        const operation = await transaction.send({amount: this.total})
-        await operation.confirmation()
+          const transaction = await contract.methods.addNewExchange(
+              this.data!.type,
+              this.data!.id,
+              this.data!.name,
+              this.data!.price*1000000,
+              this.data!.seller
+          )
+          
+          const operation = await transaction.send({amount: this.total})
+          .then((operation)=>operation.confirmation())
+          .then(()=>{
+            this.isPaymentSuccessful = true;
+            this.isPaymentInProcess = false;
+          })
+          .catch((error)=>{
+            console.log(error);this.isPaymentSuccessful = false; this.isPaymentInProcess = false;
+          });         
+        } */
         
     }
 

@@ -38,7 +38,7 @@ export default class contractUtils{
         return ongoing_exchanges;
     }
 
-    public getAllItemsWaitingForTransferWithBuyer(storage:any)
+    public getAllItemsForStateWithBuyer(storage:any, state:string)
     {
         //let items : Array<string> = []
         let items = new Map()
@@ -49,10 +49,10 @@ export default class contractUtils{
             let item = ongoing_exchanges.get(key.replace(/"/g,""))
             if(typeof item !== 'undefined')
             {
-                if(item.state === "WAITING_FOR_TRANSFER")
+                if(item.state === state)
                 { 
                     //items.push(key.replace(/"/g,""))
-                    items.set(key.replace(/"/g,""), {buyer: item.buyer, total: item.paid_price.escrow.toNumber()/1000000})
+                    items.set(key.replace(/"/g,""), {buyer: item.buyer, total: item.paid_price.escrow.toNumber()/1000000, update: new Date(item.lastUpdate).toLocaleString()})
                 }
             }
             
@@ -60,29 +60,6 @@ export default class contractUtils{
 
         return items;
         
-    }
-
-    public getAllItemsWaitingForValidationWithBuyer(storage:any)
-    {
-        //let items : Array<string> = []
-        let items = new Map()
-        const ongoing_exchanges = this.getAllExchanges(storage)
-        const keys = ongoing_exchanges.keyMap.keys()
-        for(const key of keys)
-        {
-            let item = ongoing_exchanges.get(key.replace(/"/g,""))
-            if(typeof item !== 'undefined')
-            {
-                if(item.state === "WAITING_FOR_VALIDATION")
-                { 
-                    //items.push(key.replace(/"/g,""))
-                    items.set(key.replace(/"/g,""), {buyer: item.buyer, total: item.paid_price.escrow.toNumber()/1000000})
-                }
-            }
-            
-        }
-
-        return items;
     }
 
     public isTheItemBought(storage:any, id:string)
