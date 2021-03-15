@@ -45,6 +45,8 @@ export default class Buy extends Vue {
     public total = 0
     public isPaymentInProcess= false;
     public isPaymentSuccessful= false;
+    public paymentFailed = false;
+    
 
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
@@ -96,7 +98,7 @@ export default class Buy extends Vue {
             this.isPaymentSuccessful = true;
             this.isPaymentInProcess = false;
           })
-          .catch((error)=>{console.log(error);this.isPaymentSuccessful = false; this.isPaymentInProcess = false;});
+          .catch((error)=>{console.log(error);this.isPaymentSuccessful = false; this.paymentFailed =true});
           
        /*  if(this.isPaymentInProcess) {
           const contract = await Tezos.wallet.at(this.$store.state.user.contractAddress)

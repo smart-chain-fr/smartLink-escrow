@@ -15,7 +15,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <div class="items" v-if="isItemAvailable & loaded &!isPaymentInProcess">
+        <div class="items" v-if="isItemAvailable & loaded &!isPaymentInProcess & !isPaymentSuccessful & !paymentFailed">
           <h1 class="title">Buying an item</h1>
            <v-row justify="space-between">
               <v-col lg="8" md="12" cols="12" class="d-flex" style="flex-direction:column"> 
@@ -94,7 +94,9 @@
           </section>
         </div>
         <div v-if="!isItemAvailable & loaded">Error msg // put that later</div>
-        <div v-if="isPaymentInProcess">blblbl processing</div>
+        <div v-if="isPaymentInProcess && !paymentFailed && !isPaymentSuccessful">processing</div>
+         <div v-if="paymentFailed">payment failed</div>
+         <div v-if="isPaymentSuccessful && !isPaymentInProcess">payment success</div>
       </v-container>
     </v-main>
   </v-app>
