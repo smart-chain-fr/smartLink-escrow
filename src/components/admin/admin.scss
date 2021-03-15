@@ -1,0 +1,117 @@
+.escrow {
+  padding: 2rem;
+}
+
+.v-toolbar
+{
+  box-shadow: none!important;
+}
+
+.running-contract
+{
+  color: #8988a9;
+  font-size:12px;
+}
+
+.v-navigation-drawer
+{
+  background-color: #fefefe;
+}
+
+.v-app-bar-title{
+  color: #2e2f33;
+}
+  
+.v-main
+{
+  padding: 10px!important;
+}
+
+.items td:nth-child(2) {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #9d9cb8;
+  font-family: monospace;
+}
+
+.items td
+{
+  padding: 5px 10px;
+}
+
+.items .date
+{
+  font-size:12px;
+  font-family: monospace;
+}
+
+.items th
+{
+  color: #9594b2;
+  font-size: 15px;
+  padding: 0px 10px 10px 10px;
+}
+
+.items .name
+{
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.items
+{
+  background: #ebedf4;
+  padding: 20px;
+  border-radius:15px;
+  margin-bottom:30px;
+}
+
+
+.items .seller {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #9d9cb8;
+  font-family: monospace;
+}
+
+.items .titles
+{
+  color: #9594b2;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.items h1
+{
+  padding: 5px 0px 20px 30px;
+}
+
+.items .fees
+{
+  font-size:10px;
+  font-family: monospace;
+}
+
+.items table
+{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 25px;
+  padding:20px;
+  background: white;
+}
+
+.items img
+{
+  border-radius: 15px;
+}
+
+.items .table-title
+{
+  margin: 0px 0px -5px 20px ;
+}
+
+.buy{
+  color: white!important;
+}

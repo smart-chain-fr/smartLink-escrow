@@ -22,14 +22,13 @@ export default class Sales extends Vue {
     public period : string | null = "";
     public commissions_temp:any = {}
     public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
-    
-    
+    public storage:any;
 
     async removeBoughtItems()
     {
         const filterMap = await Promise.all(
             this.data.map(async data => {
-              return await this.contractUtils.isTheItemBought(data.id);
+              return this.contractUtils.isTheItemBought(this.storage, data.id);
             }),
           );
 
@@ -46,7 +45,7 @@ export default class Sales extends Vue {
         }
         else
         {
-            commission = await this.contractUtils.getCommissionFromContract(data_type);
+            commission = await this.contractUtils.getCommissionFromContract(this.storage, data_type);
             this.commissions_temp[data_type] = commission;
         }
 
@@ -57,10 +56,11 @@ export default class Sales extends Vue {
     async updateData()
     {
         // Removing all bought items
-        this.data = await this.removeBoughtItems();
-
+        //this.data = await this.removeBoughtItems();
+        this.data = this.data.filter((data) => this.contractUtils.isTheItemBought(this.storage, data.id))
         for(let i=0; i<Object.keys(this.data).length; i++)
         {           
+            //let commission = await this.getCommission(this.data[i].type)
             let commission = await this.getCommission(this.data[i].type)
             let fees = this.data[i].shipping + this.data[i].price * (this.slashing_rate/100) + this.data[i].price* (commission/100)
             console.log(this.commissions_temp)
@@ -72,7 +72,8 @@ export default class Sales extends Vue {
     }
 
     async beforeMount() {
-        this.slashing_rate = await this.contractUtils.getSlashingRate();
+        this.storage = await this.contractUtils.getContractStorage();
+        this.slashing_rate =this.contractUtils.getSlashingRate(this.storage);
         await this.updateData();
         this.loadTable= false;
     }

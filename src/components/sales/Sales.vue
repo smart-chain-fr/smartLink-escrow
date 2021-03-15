@@ -64,7 +64,7 @@
                     <v-col cols="auto"
                       ><span class="name">{{ item.name }}</span
                       ><br /><span class="date"
-                        >Posted on {{ item.date }}</span
+                        >Posted on {{ new Date(item.date).toLocaleString() }}</span
                       ></v-col
                     ></v-row
                   >
@@ -72,7 +72,10 @@
                 <td class="text-center">{{ item.seller }}</td>
 
                 <td class="text-center">
-                  {{ item.total }} c
+                  {{ item.total }} <img
+                      :src="require(`../../assets/tezos.png`)"
+                      width="10px"
+                    />
                   <br />
                   <span class="fees"
                     >(Fees: {{ item.fees }}

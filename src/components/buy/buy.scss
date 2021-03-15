@@ -27,7 +27,6 @@
 {
     font-weight: bold;
     color:#3d3b6d;
-    margin-bottom: 10px;
 }
 
 .items
@@ -35,6 +34,7 @@
   background: #ebedf4;
   padding: 20px;
   border-radius:15px;
+
 }
 
 .items .date
@@ -64,7 +64,7 @@
     /* margin-left: auto;
     margin-right: auto; */
     border-radius: 25px;
-    padding:40px 40px 0px 40px;
+    padding:40px 40px 25px 40px;
     background: white;
 }
 
@@ -75,7 +75,7 @@
 
 .banner
 {
-    padding: 10px 5px; 
+    padding: 0px 0px 20px 5px;
 }
 
 .item .description
@@ -86,23 +86,35 @@
     padding:15px;
 }
 
-.item .prices
+.prices
 {
-    width:70%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 40px 0px;
+  background-color: white;
+  border-radius: 20px;
+  padding:40px;
 }
 
-.item .prices .subtitle-1
+.prices .subtitle-1
 {
     font-weight: bold;
     color:#3d3b6d;
 }
 
-.item .prices .price
+.prices .price
 {
     font-family: monospace;
+    color: #8d8cae;
+}
+
+.prices .total
+{
+  background-color: #f1f3ff;
+  border-radius: 20px;
+}
+
+.prices .total .price 
+{
+  font-weight: bold;
+  color:#3d3b6d;
 }
 
 .navigation-buttons
@@ -116,8 +128,3 @@
     color: white;
 }
 
-.total {
-    background: #e7daff;
-    padding: 12px;
-    border-radius: 20px;
-}
