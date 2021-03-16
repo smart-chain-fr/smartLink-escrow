@@ -89,7 +89,6 @@ export default class Home extends Vue {
         this.originating = true;
         
         const contract = await originationOp.contract();
-        //this.contractAddress = contract.address;
         this.updateContract(contract.address)
         this.originating = false;
         this.originatingCompleted = true;

@@ -98,30 +98,10 @@ export default class Buy extends Vue {
             this.isPaymentSuccessful = true;
             this.isPaymentInProcess = false;
           })
-          .catch((error)=>{console.log(error);this.isPaymentSuccessful = false; this.paymentFailed =true});
-          
-       /*  if(this.isPaymentInProcess) {
-          const contract = await Tezos.wallet.at(this.$store.state.user.contractAddress)
-        
-          const transaction = await contract.methods.addNewExchange(
-              this.data!.type,
-              this.data!.id,
-              this.data!.name,
-              this.data!.price*1000000,
-              this.data!.seller
-          )
-          
-          const operation = await transaction.send({amount: this.total})
-          .then((operation)=>operation.confirmation())
-          .then(()=>{
-            this.isPaymentSuccessful = true;
-            this.isPaymentInProcess = false;
-          })
           .catch((error)=>{
-            console.log(error);this.isPaymentSuccessful = false; this.isPaymentInProcess = false;
-          });         
-        } */
-        
+            console.log(error);
+            this.isPaymentSuccessful = false; this.paymentFailed =true
+          });
     }
 
     
