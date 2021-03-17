@@ -70,7 +70,7 @@
 
 .items .title 
 {
-    margin: 0px 0px 15px 20px ;
+    margin-left: 20px ;
 }
 
 .banner
@@ -104,49 +104,55 @@
   color: #6077de;
 }
 
-.navigation-buttons
+ .navigation-buttons
 {
     padding: 30px 0px 0px 5px;
     color:white;
-}
+} 
 
 .navigation-buttons button, .navigation-buttons a
 {
     color: white;
 }
 
-.paymentSuccessful hr
+.prices hr
 {
   border: 1px dashed #ddd;
   margin: 10px 0px 10px 0px;
 }
 
-.paymentSuccessful .title
+.prices .title
 {
   color:#4b5580;
 }
 
-.paymentSuccessful a
+.prices a
 {
   color: white;
   margin-top:30px;
 }
 
 
-.paymentSuccessful .prices
+ .prices
 {
   background-color: white;
   border-radius: 20px;
   padding:20px 40px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
-.paymentSuccessful .prices h2
+ .prices h2
 {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .paymentSuccessful .prices .overline
 {
   color:#4b5580;
+}
+
+.required-action
+{
+  padding: 0px 0px 20px 20px;
+  color: #5e5e60;
 }

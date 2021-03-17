@@ -10,7 +10,7 @@
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
-        <code>{{ this.$store.state.user.contractAddress }}</code></span
+        <code>{{ this.$store.state.contract.contractAddress }}</code></span
       >
     </v-app-bar>
     <v-main>
@@ -67,7 +67,9 @@
                   >
                 </td>
                 <td class="text-center">{{ item.seller }}</td>
-
+                <td class="text-center"><v-chip class="chip" :color="`${item.state.name}`">
+                      {{ item.state.name }}
+                    </v-chip></td>
                 <td class="text-center">
                   {{ item.total }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
@@ -81,13 +83,23 @@
                   >
                 </td>
                 <td class="text-center">
-                  <v-btn
+                  <v-btn v-if="item.state.action.name"
                     depressed
+                    rounded
                     color="main"
                     class="buy"
                     :href="`/offer/${item.id}`"
                   >
-                    View offer
+                    {{ item.state.action.name }}
+                  </v-btn>
+                  <v-btn v-else
+                    depressed
+                    rounded
+                    color="main"
+                    class="buy"
+                    :href="`/offer/${item.id}`"
+                  >
+                    View
                   </v-btn>
                 </td>
               </tr>

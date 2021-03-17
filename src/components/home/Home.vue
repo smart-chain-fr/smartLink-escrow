@@ -105,7 +105,7 @@
                                 depressed
                                 color="forward"
                                 rounded
-                                :href="`/sales/`"
+                                :href="`/offers/`"
                               >
                                 Go to escrow
                               </v-btn>
@@ -137,8 +137,8 @@
                               rounded
                               type="submit"
                               :disabled="contract.length < 1"
-                              :href="`/offers/`"
-                              @click="updateContract(contract)"
+                              
+                              @click="openContract(contract)"
                             >
                               Run contract
                             </v-btn>

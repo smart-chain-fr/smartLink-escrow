@@ -8,8 +8,9 @@ import {
   import { BeaconWallet } from "@taquito/beacon-wallet";
   import contractCode from "../../contract/Escrow-contract.json"
   import { namespace } from 'vuex-class'
-  
-  const user = namespace('user')
+  import contractUtils from "../../contract/utils"
+
+  const contract = namespace('contract')
   const Tezos = new TezosToolkit('https://edonet.smartpy.io')
   
 @Component
@@ -32,13 +33,15 @@ export default class Home extends Vue {
 
     public address: string | null = "";
 
-    @user.State
+    @contract.State
     public contractAddress!: string
 
     public contract = ""
-  
-    @user.Action
+    @contract.Action
     public updateContract!: (contractAddress: string) => void
+
+    @contract.Action
+    public updateSlashingRate!: (slashingRate: number) => void
 
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
@@ -90,8 +93,20 @@ export default class Home extends Vue {
         
         const contract = await originationOp.contract();
         this.updateContract(contract.address)
+        const storage:any = await contract.storage()
+        this.updateSlashingRate(storage.slashing_rate)
         this.originating = false;
         this.originatingCompleted = true;
+    }
+
+    async openContract(contractAddress:string)
+    {
+      const cutils = new contractUtils(contractAddress)
+      this.updateContract(contractAddress)
+      const storage = await cutils.getContractStorage();
+      const slashing_rate = cutils.getSlashingRate(storage)
+      this.updateSlashingRate(slashing_rate)
+      this.$router.push('offers')
     }
 
 }

@@ -6,11 +6,11 @@
       :style="{ background: $vuetify.theme.themes.light.background }"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>Buy</v-app-bar-title>
+      <v-app-bar-title>Offers</v-app-bar-title>
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
-        <code>{{ this.$store.state.user.contractAddress }}</code></span
+        <code>{{ this.$store.state.contract.contractAddress }}</code></span
       >
     </v-app-bar>
     <v-main>
@@ -25,7 +25,15 @@
             !paymentFailed
           "
         >
-          <h1 class="title">Buying an item</h1>
+          <h1 class="title" v-if="data.state.action.name">Offer n°{{ data.id }}: {{ data.state.action.name}}</h1>
+          <h1 class="title" v-else>Track the offer n°{{ data.id }}</h1>
+          <section class="required-action" v-if="data.state.action.required">
+            
+                {{ data.state.action.required}}
+              
+          </section>
+          <br v-else />
+
           <v-row justify="space-between">
             <v-col
               lg="8"
@@ -37,8 +45,8 @@
               <section class="item flex-grow-1">
                 <v-row align="center">
                   <v-col cols="auto"
-                    ><v-chip class="chip" :color="`${data.type}`">
-                      {{ info[data.type].name }}
+                    ><v-chip class="chip" :color="`${data.state.name}`">
+                      {{ data.state.action.short_description }}
                     </v-chip></v-col
                   >
                   <v-spacer></v-spacer>
@@ -75,45 +83,50 @@
               style="flex-direction: column"
             >
               <section class="prices flex-grow-1">
+               
+                  <h2 class="overline">{{ info[data.type].name  }}</h2>
+                
+                <hr />
                 <v-row justify="space-between">
                   <v-col cols="auto"
-                    ><h2 class="subtitle-1">Subtotal</h2></v-col
+                    ><h2>Subtotal</h2></v-col
                   >
                   <v-col cols="auto"
-                    ><span class="price">{{ data.price }}</span>
-                    <img :src="require(`../../assets/tezos.png`)" width="10px"
+                    ><span class="price">{{ data.price }} </span>
+                    <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
 
                 <v-row justify="space-between">
                   <v-col cols="auto"
-                    ><h2 class="subtitle-1">Shipping</h2></v-col
+                    ><h2>Shipping</h2></v-col
                   >
                   <v-col cols="auto"
-                    ><span class="price">{{ data.shipping }}</span>
-                    <img :src="require(`../../assets/tezos.png`)" width="10px"
+                    ><span class="price">{{ data.shipping }} </span>
+                    <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
 
                 <v-row justify="space-between">
-                  <v-col cols="auto"><h2 class="subtitle-1">Fees</h2></v-col>
+                  <v-col cols="auto"><h2>Fees</h2></v-col>
                   <v-col cols="auto"
-                    ><span class="price">{{ fees }}</span>
-                    <img :src="require(`../../assets/tezos.png`)" width="10px"
+                    ><span class="price">{{ data.fees }} </span>
+                    <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
+                <hr />
 
                 <v-row justify="space-between" class="total">
-                  <v-col cols="auto"><h2 class="subtitle-1">Total</h2></v-col>
+                  <v-col cols="auto"><h2>Total</h2></v-col>
                   <v-col cols="auto"
-                    ><span class="price">{{ total }}</span>
-                    <img :src="require(`../../assets/tezos.png`)" width="10px"
+                    ><span class="price">{{ data.total }} </span>
+                    <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
               </section>
             </v-col>
           </v-row>
-          <section class="navigation-buttons">
+         <!--  <section class="navigation-buttons">
             <v-row align="center" justify="space-between">
               <v-col cols="auto">
                 <v-btn depressed color="back" rounded :href="`/sales/`">
@@ -121,12 +134,17 @@
                 </v-btn>
               </v-col>
               <v-col cols="auto">
-                <v-btn depressed color="forward" rounded @click="buy">
-                  Pay <v-icon right>mdi-chevron-right-circle</v-icon></v-btn
+                <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="buy">
+                  {{data.state.action.name}} <v-icon right>mdi-chevron-right-circle</v-icon></v-btn
                 >
               </v-col>
             </v-row>
-          </section>
+          </section> -->
+         
+         <section class="navigation-buttons text-right"> <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="action(data.state.action.action)" >
+                  {{data.state.action.name}} <v-icon right>mdi-chevron-right-circle</v-icon></v-btn
+                >
+                </section>
         </div>
         <div v-if="!isItemAvailable & loaded">Error msg // put that later</div>
         <div
@@ -156,7 +174,7 @@
                   <v-btn depressed color="back" rounded :href="`/sales/`"> <v-icon left>mdi-cart-variant</v-icon> Back to sales </v-btn>
                 </v-col>
                 <v-col cols="auto">
-                  <v-btn depressed color="forward" rounded @click="buy"><v-icon left>mdi-restart</v-icon> Try again </v-btn>
+                  <v-btn depressed color="forward" rounded @click="action(data.state.action.action)"><v-icon left>mdi-restart</v-icon> Try again </v-btn>
                 </v-col>
               </v-row>
             </section>

@@ -1,8 +1,4 @@
 import { TezosToolkit } from "@taquito/taquito"
-import moment from "moment"
-import { namespace } from 'vuex-class'
-
-const user = namespace('user')
 
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 

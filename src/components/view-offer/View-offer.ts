@@ -8,8 +8,12 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 
 import offers from "../../demo-data/offers.json"
 import contractUtils from "@/contract/utils"
-import { TezosToolkit } from "@taquito/taquito"
+import dataUtils from "@/demo-data/utils"
 
+import { ContractAbstraction, TezosToolkit, Wallet } from "@taquito/taquito"
+import { namespace } from 'vuex-class'
+
+const contract = namespace('contract')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component
@@ -17,7 +21,7 @@ export default class Buy extends Vue {
 
   public drawer = true;
 
-  public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
+  public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
   public storage: any;
   public info = {
     "DOMAIN_NAME": {
@@ -36,18 +40,17 @@ export default class Buy extends Vue {
   }
 
   public id = this.$route.params.id
-  //public data = offers.find(data => data.id === this.$route.params.id)
-  public data = Object(offers).get(this.$route.params.id)
+  public data = offers.find(data => data.id === this.$route.params.id)
   public isItemAvailable = false;
   public loaded = false;
   public commission = 0
-  public slashing_rate = 0
+  public slashing_rate = this.$store.state.contract.slashingRate
   public fees = 0
   public total = 0
   public isPaymentInProcess = false;
   public isPaymentSuccessful = false;
   public paymentFailed = false;
-
+  public dataUtils = new dataUtils()
 
   private wallet = new BeaconWallet({
     name: "Escrow DApp",
@@ -64,33 +67,44 @@ export default class Buy extends Vue {
   });
 
   async beforeMount() {
-    this.storage = await this.contractUtils.getContractStorage()
     if (typeof this.data !== 'undefined') {
-      this.isItemAvailable = this.contractUtils.isTheItemBought(this.storage, this.id)
+      this.isItemAvailable = true;
+      this.storage = await this.contractUtils.getContractStorage()
+      const exchanges = this.contractUtils.getAllExchangesMap(this.storage)
+
+      if (exchanges.has(this.data!.id)) {
+        const exchange = exchanges.get(this.data!.id)
+        this.dataUtils.updateDataWithExchange(this.data, exchange)
+      }
+      else
+      {
+        const commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.type)
+        this.dataUtils.updateDefaultData(this.data, commission, this.slashing_rate)
+      }
+      console.log(this.data)
+    }
+
+   /*  console.log(this.data)
+    if (typeof this.data !== 'undefined') {
       this.commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.type);
       this.slashing_rate = this.contractUtils.getSlashingRate(this.storage);
       this.fees = this.data!.price * (this.slashing_rate / 100) + this.data!.price * (this.commission / 100)
       this.total = this.data!.price + this.fees
-    }
+    } */
     this.loaded = true;
 
   }
 
-  async buy() {
+  async action(action_to_perform:string) {
     this.paymentFailed = false
     this.isPaymentInProcess = true;
     Tezos.setWalletProvider(this.wallet);
     // Request permissions
     await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } })
-      .then(() => Tezos.wallet.at(this.$store.state.user.contractAddress))
+      .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
       .then((contract) =>
-        contract.methods.addNewExchange(
-          this.data!.type,
-          this.data!.id,
-          this.data!.name,
-          this.data!.price * 1000000,
-          this.data!.seller
-        ))
+        (action_to_perform==="init-exchange") ? this.addNewExchange(contract):this.validateExchange(contract)
+        )
       .then((transaction) => transaction.send({ amount: this.total }))
       .then((operation) => operation.confirmation())
       .then(() => {
@@ -103,6 +117,22 @@ export default class Buy extends Vue {
         this.paymentFailed = true
         this.isPaymentInProcess = false
       });
+  }
+
+  addNewExchange(contract:ContractAbstraction<Wallet>){
+    return contract.methods.addNewExchange(
+      this.data!.type,
+      this.data!.id,
+      this.data!.name,
+      this.data!.price * 1000000,
+      this.data!.seller
+    )
+  }
+
+  validateExchange(contract:ContractAbstraction<Wallet>){
+    return contract.methods.validateExchange(
+      this.data!.id
+    )
   }
 
 
