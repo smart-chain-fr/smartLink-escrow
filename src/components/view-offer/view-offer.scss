@@ -29,7 +29,7 @@
     color:#3d3b6d;
 }
 
-.items
+.items, .paymentSuccessful
 {
   background: #ebedf4;
   padding: 20px;
@@ -70,7 +70,7 @@
 
 .items .title 
 {
-    margin: 0px 0px 15px 20px ;
+    margin-left: 20px ;
 }
 
 .banner
@@ -92,39 +92,67 @@
   border-radius: 20px;
   padding:40px;
 }
-
-.prices .subtitle-1
-{
-    font-weight: bold;
-    color:#3d3b6d;
-}
-
 .prices .price
 {
     font-family: monospace;
     color: #8d8cae;
 }
 
-.prices .total
-{
-  background-color: #f1f3ff;
-  border-radius: 20px;
-}
-
-.prices .total .price 
+.prices .total .price, .prices .total h2
 {
   font-weight: bold;
-  color:#3d3b6d;
+  color: #6077de;
 }
 
-.navigation-buttons
+ .navigation-buttons
 {
     padding: 30px 0px 0px 5px;
     color:white;
-}
+} 
 
 .navigation-buttons button, .navigation-buttons a
 {
     color: white;
 }
 
+.prices hr
+{
+  border: 1px dashed #ddd;
+  margin: 10px 0px 10px 0px;
+}
+
+.prices .title
+{
+  color:#4b5580;
+}
+
+.prices a
+{
+  color: white;
+  margin-top:30px;
+}
+
+
+ .prices
+{
+  background-color: white;
+  border-radius: 20px;
+  padding:20px 40px;
+  font-size: 15px;
+}
+
+ .prices h2
+{
+  font-size: 14px;
+}
+
+.paymentSuccessful .prices .overline
+{
+  color:#4b5580;
+}
+
+.required-action
+{
+  padding: 0px 0px 20px 20px;
+  color: #5e5e60;
+}

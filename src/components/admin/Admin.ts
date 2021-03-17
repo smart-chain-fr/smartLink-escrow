@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import goodsToBuy from "../../demo-data/goods-to-buy.json"
+import offers from "../../demo-data/offers.json"
 import contractUtils from "../../contract/utils"
 
 import { TezosToolkit } from "@taquito/taquito"
@@ -12,7 +12,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 
 import { namespace } from 'vuex-class'
 
-const user = namespace('user')
+const contract = namespace('contract')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component
@@ -20,9 +20,9 @@ export default class Sales extends Vue {
 
     public drawer = true;
 
-    public data = goodsToBuy;
+    public data = offers;
    
-    public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
+    public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
     public itemsWaitingForValidation:any={}
     public itemsWaitingForTransfer:any = {}
     public headers = ["Item", "Buyer", "Escrowed amount", ""]
@@ -88,7 +88,7 @@ export default class Sales extends Vue {
         // Request permissions
 
         await this.wallet.client.requestPermissions({network : { type : NetworkType.EDONET }})
-        .then(() => Tezos.wallet.at(this.$store.state.user.contractAddress))
+        .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
         .then((contract)=> contract.methods.validateExchange(
                     id
             )
@@ -114,7 +114,7 @@ export default class Sales extends Vue {
         // Request permissions
 
         await this.wallet.client.requestPermissions({network : { type : NetworkType.EDONET }})
-        .then(() => Tezos.wallet.at(this.$store.state.user.contractAddress))
+        .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
         .then((contract)=> contract.methods.validateSellerTransmission(
                     id
                 )

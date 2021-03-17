@@ -10,7 +10,7 @@
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
-        <code>{{ this.$store.state.user.contractAddress }}</code></span
+        <code>{{ this.$store.state.contract.contractAddress }}</code></span
       >
     </v-app-bar>
     <v-main>

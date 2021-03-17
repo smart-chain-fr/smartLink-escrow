@@ -1,16 +1,16 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes.light.background}">
+  <v-app :style="{ background: $vuetify.theme.themes.light.background }">
     <v-navigation-drawer v-model="drawer" floating app> </v-navigation-drawer>
     <v-app-bar
       app
-      :style="{background: $vuetify.theme.themes.light.background}"
+      :style="{ background: $vuetify.theme.themes.light.background }"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>Sales</v-app-bar-title>
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
-        <code>{{ this.$store.state.user.contractAddress }}</code></span
+        <code>{{ this.$store.state.contract.contractAddress }}</code></span
       >
     </v-app-bar>
     <v-main>
@@ -23,12 +23,8 @@
         <div class="items" v-if="!loadTable">
           <v-row class="table-title" align="center">
             <v-col cols="auto"
-              ><span class="title">Latest Sales</span>
-              <img
-                :src="require(`../../assets/fire.png`)"
-                aspect-ratio="1"
-                width="20px"
-              />
+              ><span class="title">Recent offers</span>
+             
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="auto">
@@ -64,18 +60,19 @@
                     <v-col cols="auto"
                       ><span class="name">{{ item.name }}</span
                       ><br /><span class="date"
-                        >Posted on {{ new Date(item.date).toLocaleString() }}</span
+                        >Last update:
+                        {{ new Date(item.date).toLocaleString() }}</span
                       ></v-col
                     ></v-row
                   >
                 </td>
                 <td class="text-center">{{ item.seller }}</td>
-
+                <td class="text-center"><v-chip class="chip" :color="`${item.state.name}`">
+                      {{ item.state.name }}
+                    </v-chip></td>
                 <td class="text-center">
-                  {{ item.total }} <img
-                      :src="require(`../../assets/tezos.png`)"
-                      width="10px"
-                    />
+                  {{ item.total }}
+                  <img :src="require(`../../assets/tezos.png`)" width="10px" />
                   <br />
                   <span class="fees"
                     >(Fees: {{ item.fees }}
@@ -86,65 +83,33 @@
                   >
                 </td>
                 <td class="text-center">
-                  <v-btn
+                  <v-btn v-if="item.state.action.name"
                     depressed
+                    rounded
                     color="main"
                     class="buy"
-                    :href="`/buy/${item.id}`"
+                    :href="`/offer/${item.id}`"
                   >
-                    Buy
+                    {{ item.state.action.name }}
+                  </v-btn>
+                  <v-btn v-else
+                    depressed
+                    rounded
+                    color="main"
+                    class="buy"
+                    :href="`/offer/${item.id}`"
+                  >
+                    View
                   </v-btn>
                 </td>
               </tr>
             </tbody>
           </table>
-          <!-- <v-container class="items">
-            <v-row>
-              <v-col 
-                v-for="header in headers"
-                :key="header" 
-                class="text-center titles"
-              >
-            {{ header }}
-              </v-col>
-            </v-row>
-            <v-row
-              v-for="item in data"
-              :key="item.name"
-              :loading="loadTable"
-              class="text-center"
-            >
-              <v-col>
-                <v-row align="left" class="text-left">
-                <v-col cols="auto">
-                  <img 
-                    :src="require(`../../assets/${item.picture}`)" 
-                    aspect-ratio="1"
-                    width="55px" 
-                  /> 
-                </v-col>
-                <v-col><span class="name">{{ item.name }}</span><br /><span class="date">{{ item.date }}</span></v-col></v-row>
-              </v-col>
-              <v-col class="seller">
-                {{ item.seller }}
-              </v-col>
-              <v-col>
-                {{ item.total }} <img :src="require(`../../assets/tezos.png`)" width="10px" />
-                <br />
-                <span class="fees">(Fees:  {{ item.fees }} <img :src="require(`../../assets/tezos.png`)" width="6px" />)</span>
-              </v-col>
-               <v-col>
-                <v-btn depressed color="primary">
-                    Buy
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container> -->
         </div>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
-<script lang="ts" src="./Sales.ts"></script>
-<style lang="scss" scoped src="./sales.scss"></style>
+<script lang="ts" src="./Offers.ts"></script>
+<style lang="scss" scoped src="./offers.scss"></style>
