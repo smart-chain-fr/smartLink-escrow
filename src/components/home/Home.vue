@@ -137,7 +137,7 @@
                               rounded
                               type="submit"
                               :disabled="contract.length < 1"
-                              :href="`/sales/`"
+                              :href="`/offers/`"
                               @click="updateContract(contract)"
                             >
                               Run contract

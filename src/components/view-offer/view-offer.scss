@@ -29,7 +29,7 @@
     color:#3d3b6d;
 }
 
-.items
+.items, .paymentSuccessful
 {
   background: #ebedf4;
   padding: 20px;
@@ -92,29 +92,16 @@
   border-radius: 20px;
   padding:40px;
 }
-
-.prices .subtitle-1
-{
-    font-weight: bold;
-    color:#3d3b6d;
-}
-
 .prices .price
 {
     font-family: monospace;
     color: #8d8cae;
 }
 
-.prices .total
-{
-  background-color: #f1f3ff;
-  border-radius: 20px;
-}
-
-.prices .total .price 
+.prices .total .price, .prices .total h2
 {
   font-weight: bold;
-  color:#3d3b6d;
+  color: #6077de;
 }
 
 .navigation-buttons
@@ -128,3 +115,38 @@
     color: white;
 }
 
+.paymentSuccessful hr
+{
+  border: 1px dashed #ddd;
+  margin: 10px 0px 10px 0px;
+}
+
+.paymentSuccessful .title
+{
+  color:#4b5580;
+}
+
+.paymentSuccessful a
+{
+  color: white;
+  margin-top:30px;
+}
+
+
+.paymentSuccessful .prices
+{
+  background-color: white;
+  border-radius: 20px;
+  padding:20px 40px;
+  font-size: 12px;
+}
+
+.paymentSuccessful .prices h2
+{
+  font-size: 12px;
+}
+
+.paymentSuccessful .prices .overline
+{
+  color:#4b5580;
+}

@@ -1,0 +1,28 @@
+{
+    "default": {
+        "name": "initialized",
+        "action": {
+            "name": "Awaiting escrow",
+            "url": "/init-escrow/"
+        }
+    },
+    "WAITING_FOR_TRANSFER": {
+        "name": "shipped",
+        "action": {
+            "name": "Awaiting seller transmission"
+        }
+    },
+    "WAITING_FOR_VALIDATION": {
+        "name": "delivered",
+        "action": {
+            "name": "Awaiting validation",
+            "url": "/validate/"
+        }
+    },
+    "VALIDATED": {
+        "name": "finished",
+        "action": {
+            "name": "Exchange successful"
+        }
+    }
+}

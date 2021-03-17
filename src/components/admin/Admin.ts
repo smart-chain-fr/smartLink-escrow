@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import goodsToBuy from "../../demo-data/goods-to-buy.json"
+import offers from "../../demo-data/offers.json"
 import contractUtils from "../../contract/utils"
 
 import { TezosToolkit } from "@taquito/taquito"
@@ -20,7 +20,7 @@ export default class Sales extends Vue {
 
     public drawer = true;
 
-    public data = goodsToBuy;
+    public data = offers;
    
     public contractUtils = new contractUtils(this.$store.state.user.contractAddress)
     public itemsWaitingForValidation:any={}
