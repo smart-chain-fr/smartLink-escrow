@@ -90,6 +90,7 @@ export default class Home extends Vue {
         
         const contract = await originationOp.contract();
         this.updateContract(contract.address)
+        this.contractAddress = contract.address
         const storage:any = await contract.storage()
         this.updateSlashingRate(storage.slashing_rate)
         this.originating = false;

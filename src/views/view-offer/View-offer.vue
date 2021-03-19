@@ -71,7 +71,7 @@
                   >
                 </v-row>
                 <section class="description">
-                  {{ info[data.type].description }}
+                  {{ info[data.escrow_type].description }}
                 </section>
               </section>
             </v-col>
@@ -84,7 +84,7 @@
             >
               <section class="prices flex-grow-1">
                
-                  <h2 class="overline">{{ info[data.type].name  }}</h2>
+                  <h2 class="overline">{{ info[data.escrow_type].name  }}</h2>
                 
                 <hr />
                 <v-row justify="space-between">

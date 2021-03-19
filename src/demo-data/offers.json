@@ -1,53 +1,170 @@
 [
     {
+        "id":"1",
         "name": "domain_name1.com",
-        "type":"DOMAIN_NAME",
+        "escrow_type":"DOMAIN_NAME",
         "price":30,
         "shipping":0,
         "date":"03/03/2021 14:55",
-        "id":"1",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "picture":"dm.png"
+        "picture":"dm.png",
+        "type":"offer"
+
     }, 
     {
+        "id":"2",
         "name": "domain_name2.io",
-        "type":"DOMAIN_NAME",
+        "escrow_type":"DOMAIN_NAME",
         "price":17,
         "shipping":0,
         "date":"03/15/2021 07:04",
-        "id":"2",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "picture": "dm.png"
+        "picture": "dm.png",
+        "type":"offer"
     }, 
     {
+        "id":"3",
         "name": "item 1",
-        "type":"OBJECT",
+        "escrow_type":"OBJECT",
         "price":100,
         "shipping":5,
         "date":"03/14/2021 9:28",
-        "id":"3",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "picture": "car.png"
+        "picture": "car.png",
+        "type":"offer"
     },
     {
+        "id":"4",
         "name": "item 2",
-        "type":"OBJECT",
+        "escrow_type":"OBJECT",
         "price":490,
         "shipping":30,
         "date":"03/22/2021 22:17",
-        "id":"4",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
-        "picture": "notebook.png"
+        "picture": "notebook.png",
+        "type":"offer"
     },
     {
+        "id":"5",
         "name": "other",
-        "type":"OTHER",
+        "escrow_type":"OTHER",
         "price":5000,
         "shipping":0,
         "date":"03/27/2021 18:07",
-        "id":"5",
         "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
-        "picture": "service.png"
+        "picture": "service.png",
+        "type":"offer"
+    },
+    {
+        "id":"6",
+        "name": "domain_name2.com",
+        "escrow_type":"DOMAIN_NAME",
+        "price":290,
+        "shipping":0,
+        "date":"03/03/2021 14:55",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture":"dm.png",
+        "type":"sale"
+
+    }, 
+    {
+        "id":"7",
+        "name": "domain_name2.io",
+        "escrow_type":"DOMAIN_NAME",
+        "price":175,
+        "shipping":0,
+        "date":"03/15/2021 07:04",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "dm.png",
+        "type":"sale"
+    }, 
+    {
+        "id":"8",
+        "name": "item 8",
+        "escrow_type":"OBJECT",
+        "price":150,
+        "shipping":5,
+        "date":"03/14/2021 9:28",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "car.png",
+        "type":"sale"
+    },
+    {
+        "id":"9",
+        "name": "item202",
+        "escrow_type":"OBJECT",
+        "price":290,
+        "shipping":30,
+        "date":"03/22/2021 22:17",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "notebook.png",
+        "type":"sale"
+    },
+    {
+        "id":"10",
+        "name": "other 2",
+        "escrow_type":"OTHER",
+        "price":500,
+        "shipping":0,
+        "date":"03/27/2021 18:07",
+        "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
+        "picture": "service.png",
+        "type":"sale"
+    },{
+        "id":"11",
+        "name": "domain_name12.com",
+        "escrow_type":"DOMAIN_NAME",
+        "price":300,
+        "shipping":0,
+        "date":"03/03/2021 14:55",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture":"dm.png",
+        "type":"sale"
+
+    }, 
+    {
+        "id":"12",
+        "name": "domain_name42.io",
+        "escrow_type":"DOMAIN_NAME",
+        "price":185,
+        "shipping":0,
+        "date":"03/15/2021 07:04",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "dm.png",
+        "type":"sale"
+    }, 
+    {
+        "id":"13",
+        "name": "item 15",
+        "escrow_type":"OBJECT",
+        "price":1500,
+        "shipping":5,
+        "date":"03/14/2021 9:28",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "car.png",
+        "type":"sale"
+    },
+    {
+        "id":"14",
+        "name": "item 42",
+        "escrow_type":"OBJECT",
+        "price":1490,
+        "shipping":30,
+        "date":"03/22/2021 22:17",
+        "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
+        "picture": "notebook.png",
+        "type":"sale"
+    },
+    {
+        "id":"15",
+        "name": "other",
+        "escrow_type":"OTHER",
+        "price":550,
+        "shipping":0,
+        "date":"03/27/2021 18:07",
+        "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
+        "picture": "service.png",
+        "type":"sale"
     }
 ]
 

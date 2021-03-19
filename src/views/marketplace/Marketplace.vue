@@ -67,7 +67,7 @@
                   >
                 </td>
                 <td class="text-center">{{ item.seller }}</td>
-               
+                
                 <td class="text-center">
                   {{ item.total }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
@@ -88,19 +88,9 @@
                     class="buy"
                     :href="`/offer/${item.id}`"
                   >
-                   View
+                   Buy
                   </v-btn>
-                </td>
-                <td class="text-center">
-                  <v-btn 
-                    depressed
-                    rounded
-                    color="red"
-                    class="buy"
-                    :href="`/offer/${item.id}`"
-                  >
-                   Remove
-                  </v-btn>
+                  
                 </td>
               </tr>
             </tbody>
@@ -111,5 +101,5 @@
   </v-app>
 </template>
 
-<script lang="ts" src="./Offers.ts"></script>
-<style lang="scss" scoped src="./offers.scss"></style>
+<script lang="ts" src="./Marketplace.ts"></script>
+<style lang="scss" scoped src="./marketplace.scss"></style>

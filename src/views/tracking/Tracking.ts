@@ -15,9 +15,9 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component({
     components: {
-      Navigation
+        Navigation
     },
-  })
+})
 export default class Sales extends Vue {
 
     public drawer = true;
@@ -27,7 +27,7 @@ export default class Sales extends Vue {
     public data = offers;
     public states: any = states;
     public error = false;
-    public headers = ["Product", "Seller", "Total", "",""];
+    public headers = ["Product", "Seller", "State", "Total", ""];
     public period: string | null = "";
     public commissions_temp = new Map()
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
@@ -50,29 +50,16 @@ export default class Sales extends Vue {
 
     }
 
-/*     loadData() {
-        const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data.map(async (data) => {
-            if (exchanges.has(data.id)) {
-                const exchange = exchanges.get(data.id)
-                this.dataUtils.updateDataWithExchange(data, exchange)
-            }
-            else {
-                const commission = await this.getCommission(data.escrow_type)
-                this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
-            }
-        })
-    }
- */
     loadData() {
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="offer")
+        this.data = this.data.filter((data) => exchanges.has(data.id))
         console.log(this.data)
         this.data.map((data) => {
-            const commission = this.getCommission(data.escrow_type)
-            this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
+            const exchange = exchanges.get(data.id)
+            this.dataUtils.updateDataWithExchange(data, exchange)
         })
     }
+
 
     async beforeMount() {
         this.storage = await this.contractUtils.getContractStorage();

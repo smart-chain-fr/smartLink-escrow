@@ -27,7 +27,7 @@ export default class Sales extends Vue {
     public data = offers;
     public states: any = states;
     public error = false;
-    public headers = ["Product", "Seller", "Total", "",""];
+    public headers = ["Product", "Seller", "Total", ""];
     public period: string | null = "";
     public commissions_temp = new Map()
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
@@ -66,7 +66,7 @@ export default class Sales extends Vue {
  */
     loadData() {
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="offer")
+        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="sale")
         console.log(this.data)
         this.data.map((data) => {
             const commission = this.getCommission(data.escrow_type)

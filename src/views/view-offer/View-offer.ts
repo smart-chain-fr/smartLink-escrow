@@ -32,7 +32,7 @@ export default class Buy extends Vue {
   public info = info;
 
   public id = this.$route.params.id
-  public data = offers.find(data => data.id === this.$route.params.id)
+  public data:any = offers.find(data => data.id === this.$route.params.id)
   public isItemAvailable = false;
   public loaded = false;
   public commission = 0
@@ -70,7 +70,7 @@ export default class Buy extends Vue {
       }
       else
       {
-        const commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.type)
+        const commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.escrow_type)
         this.dataUtils.updateDefaultData(this.data, commission, this.slashing_rate)
       }
       console.log(this.data)
@@ -95,9 +95,9 @@ export default class Buy extends Vue {
     await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } })
       .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
       .then((contract) =>
-        (action_to_perform==="init-exchange") ? this.addNewExchange(contract):this.validateExchange(contract)
+         this.addNewExchange(contract)
         )
-      .then((transaction) => transaction.send({ amount: this.total }))
+      .then((transaction) => transaction.send({ amount: this.data!.total }))
       .then((operation) => operation.confirmation())
       .then(() => {
         this.isPaymentSuccessful = true;
@@ -113,9 +113,9 @@ export default class Buy extends Vue {
 
   addNewExchange(contract:ContractAbstraction<Wallet>){
     return contract.methods.addNewExchange(
-      this.data!.type,
-      this.data!.id,
       this.data!.name,
+      this.data!.escrow_type,
+      this.data!.id,
       this.data!.price * 1000000,
       this.data!.seller
     )

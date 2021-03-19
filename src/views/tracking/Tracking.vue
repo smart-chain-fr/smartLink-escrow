@@ -67,7 +67,9 @@
                   >
                 </td>
                 <td class="text-center">{{ item.seller }}</td>
-               
+                <td class="text-center"><v-chip class="chip" :color="`${item.state.name}`">
+                      {{ item.state.name }}
+                    </v-chip></td>
                 <td class="text-center">
                   {{ item.total }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
@@ -81,25 +83,23 @@
                   >
                 </td>
                 <td class="text-center">
-                  <v-btn 
+                  <v-btn v-if="item.state.action.name"
                     depressed
                     rounded
                     color="main"
                     class="buy"
                     :href="`/offer/${item.id}`"
                   >
-                   View
+                    {{ item.state.action.name }}
                   </v-btn>
-                </td>
-                <td class="text-center">
-                  <v-btn 
+                  <v-btn v-else
                     depressed
                     rounded
-                    color="red"
+                    color="main"
                     class="buy"
                     :href="`/offer/${item.id}`"
                   >
-                   Remove
+                    View
                   </v-btn>
                 </td>
               </tr>
@@ -111,5 +111,5 @@
   </v-app>
 </template>
 
-<script lang="ts" src="./Offers.ts"></script>
-<style lang="scss" scoped src="./offers.scss"></style>
+<script lang="ts" src="./Tracking.ts"></script>
+<style lang="scss" scoped src="./tracking.scss"></style>
