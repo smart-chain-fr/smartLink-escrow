@@ -7,7 +7,6 @@ export default class contractUtils {
 
     constructor(contractAddress: string) {
         this.contractAddress = contractAddress
-
     }
 
     public async getContractStorage() {
@@ -21,37 +20,32 @@ export default class contractUtils {
         return slashing_rate;
     }
 
-    public async getCommissionFromContract(storage: any, escrow_type: string) {
-        const commission = await storage.escrow_types.get(escrow_type);
+    public getCommissionFromContract(storage: any, escrow_type: string) {
+        const commission = storage.escrow_types.get(escrow_type);
         return commission.toNumber();
     }
 
-    public getAllExchanges(storage: any) {
-        const ongoing_exchanges = storage.exchanges;
-        return ongoing_exchanges;
-    }
-
-    public getAllExchangesMap(storage: any) {
+    public getMap(storage: any, data_name:string) {
         let items = new Map()
 
-        const exchanges = this.getAllExchanges(storage)
-        const keys = exchanges.keyMap.keys()
+        const data = storage[data_name]
+        const keys = data.keyMap.keys()
 
         for (let key of keys) {
+
             key = key.replace(/"/g, "")
-            let item = exchanges.get(key)
+            let item = data.get(key)
             if (typeof item !== 'undefined') {
                 items.set(key, item)
             }
         }
         return items;
-    }
-
+    }  
 
     public getAllItemsForStateWithBuyer(storage: any, state: string) {
         //let items : Array<string> = []
         let items = new Map()
-        const ongoing_exchanges = this.getAllExchanges(storage)
+        const ongoing_exchanges = storage.exchanges
         const keys = ongoing_exchanges.keyMap.keys()
         for (const key of keys) {
             let item = ongoing_exchanges.get(key.replace(/"/g, ""))
@@ -65,20 +59,6 @@ export default class contractUtils {
         }
 
         return items;
-    }
-
-    public isTheItemBought(storage: any, id: string) {
-        const ongoing_exchanges = this.getAllExchanges(storage)
-        const exchange = ongoing_exchanges.get(id)
-        let result = false;
-
-        if (typeof exchange === 'undefined') {
-            result = true;
-        }
-        else if (ongoing_exchanges.get(id).state === "CANCELLED") {
-            result = true;
-        }
-        return result;
     }
 
 }

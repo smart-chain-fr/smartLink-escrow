@@ -7,37 +7,29 @@ import {
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
 import offers from "../../demo-data/offers.json"
+import info from "../../demo-data/types-info.json"
 import contractUtils from "@/contract/utils"
 import dataUtils from "@/demo-data/utils"
 
 import { ContractAbstraction, TezosToolkit, Wallet } from "@taquito/taquito"
 import { namespace } from 'vuex-class'
+import Navigation from '@/components/navigation/Navigation.vue';
 
 const contract = namespace('contract')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
-@Component
+@Component({
+  components: {
+    Navigation
+  },
+})
 export default class Buy extends Vue {
 
   public drawer = true;
 
   public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
   public storage: any;
-  public info = {
-    "DOMAIN_NAME": {
-      color: "primary",
-      name: "Domain name",
-      description: "Until the domain name has been transferred by the Seller to the Buyer, SmartLink's smart contract will hold the payment. SmartLink is connected to the WHOIS database and ensures a seemless transfer for both parties."
-    },
-    "OTHER": {
-      name: "Other",
-      description: "Until the transferred has been confirmed by the Seller to the Buyer, SmartLink's smart contract will hold the payment."
-    },
-    "OBJECT": {
-      name: "Object",
-      description: "Until the object has been transferred by the Seller to the Buyer, SmartLink's smart contract will hold the payment."
-    },
-  }
+  public info = info;
 
   public id = this.$route.params.id
   public data = offers.find(data => data.id === this.$route.params.id)
@@ -70,7 +62,7 @@ export default class Buy extends Vue {
     if (typeof this.data !== 'undefined') {
       this.isItemAvailable = true;
       this.storage = await this.contractUtils.getContractStorage()
-      const exchanges = this.contractUtils.getAllExchangesMap(this.storage)
+      const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
 
       if (exchanges.has(this.data!.id)) {
         const exchange = exchanges.get(this.data!.id)

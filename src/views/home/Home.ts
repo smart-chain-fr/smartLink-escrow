@@ -33,10 +33,7 @@ export default class Home extends Vue {
 
     public address: string | null = "";
 
-    @contract.State
-    public contractAddress!: string
-
-    public contract = ""
+    public contractAddress = ""
     @contract.Action
     public updateContract!: (contractAddress: string) => void
 
@@ -66,27 +63,27 @@ export default class Home extends Vue {
         .originate({
             code: contractCode,
             init: {
-                "prim": "Pair",
-                "args": [
-                  {
-                    "prim": "Pair",
-                    "args": [
-                      [
-                        { "prim": "Elt", "args": [ { "int": "0" }, { "string": "WAITING_FOR_TRANSFER" } ] },
-                        { "prim": "Elt", "args": [ { "int": "1" }, { "string": "WAITING_FOR_VALIDATION" } ] },
-                        { "prim": "Elt", "args": [ { "int": "2" }, { "string": "VALIDATED" } ] },
-                        { "prim": "Elt", "args": [ { "int": "3" }, { "string": "CANCELLED" } ] }
-                      ],
-                      [
-                        { "prim": "Elt", "args": [ { "string": "DOMAIN_NAME" }, { "int": "3" } ] },
-                        { "prim": "Elt", "args": [ { "string": "OBJECT" }, { "int": "5" } ] },
-                        { "prim": "Elt", "args": [ { "string": "OTHER" }, { "int": "5" } ] }
-                      ]
+              "prim": "Pair",
+              "args": [
+                {
+                  "prim": "Pair",
+                  "args": [
+                    [
+                      { "prim": "Elt", "args": [ { "int": "0" }, { "string": "WAITING_FOR_TRANSFER" } ] },
+                      { "prim": "Elt", "args": [ { "int": "1" }, { "string": "WAITING_FOR_VALIDATION" } ] },
+                      { "prim": "Elt", "args": [ { "int": "2" }, { "string": "VALIDATED" } ] },
+                      { "prim": "Elt", "args": [ { "int": "3" }, { "string": "CANCELLED" } ] }
+                    ],
+                    [
+                      { "prim": "Elt", "args": [ { "string": "DOMAIN_NAME" }, { "int": "5" } ] },
+                      { "prim": "Elt", "args": [ { "string": "OBJECT" }, { "int": "3" } ] },
+                      { "prim": "Elt", "args": [ { "string": "OTHER" }, { "int": "2" } ] }
                     ]
-                  },
-                  { "prim": "Pair", "args": [ [], { "prim": "Pair", "args": [ { "string": this.address }, { "int": "5" } ] } ] }
-                ]
-              }
+                  ]
+                },
+                { "prim": "Pair", "args": [ [], { "prim": "Pair", "args": [ { "string": this.address }, { "int": "5" } ] } ] }
+              ]
+            }
         })
         .send();
         this.originating = true;
@@ -99,14 +96,19 @@ export default class Home extends Vue {
         this.originatingCompleted = true;
     }
 
-    async openContract(contractAddress:string)
+    async openContract()
     {
-      const cutils = new contractUtils(contractAddress)
-      this.updateContract(contractAddress)
+      const cutils = new contractUtils(this.contractAddress)
+      this.updateContract(this.contractAddress)
       const storage = await cutils.getContractStorage();
       const slashing_rate = cutils.getSlashingRate(storage)
       this.updateSlashingRate(slashing_rate)
       this.$router.push('offers')
+    }
+
+    beforeMount()
+    {
+      (this.$store.state.contract.contractAddress)?this.contractAddress = this.$store.state.contract.contractAddress : ""
     }
 
 }

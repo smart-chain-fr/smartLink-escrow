@@ -5,15 +5,19 @@ import states from "../../demo-data/states.json"
 import contractUtils from "../../contract/utils"
 import dataUtils from "../../demo-data/utils"
 
-
 import { TezosToolkit } from "@taquito/taquito"
 import moment from "moment"
 import { namespace } from 'vuex-class'
+import Navigation from '@/components/navigation/Navigation.vue';
 
 const contract = namespace('contract')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
-@Component
+@Component({
+    components: {
+      Navigation
+    },
+  })
 export default class Sales extends Vue {
 
     public drawer = true;
@@ -30,7 +34,7 @@ export default class Sales extends Vue {
     public dataUtils = new dataUtils();
     public storage: any;
 
-    async getCommission(data_type: string) {
+    getCommission(data_type: string) {
         let commission = 0;
 
         // get commission; we're using a temp object to avoid querying the contract too many times
@@ -38,7 +42,7 @@ export default class Sales extends Vue {
             commission = this.commissions_temp.get(data_type)
         }
         else {
-            commission = await this.contractUtils.getCommissionFromContract(this.storage, data_type);
+            commission = this.contractUtils.getCommissionFromContract(this.storage, data_type);
             this.commissions_temp.set(data_type, commission)
         }
 
@@ -46,25 +50,24 @@ export default class Sales extends Vue {
 
     }
 
-    async loadData() {
-        const exchanges = this.contractUtils.getAllExchangesMap(this.storage)
-        await Promise.all(
-            this.data.map(async (data) => {
-                if (exchanges.has(data.id)) {
-                    const exchange = exchanges.get(data.id)
-                    this.dataUtils.updateDataWithExchange(data, exchange)
-                }
-                else {
-                    const commission = await this.getCommission(data.type)
-                    this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
-                }
-            }))
+    loadData() {
+        const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
+        this.data.map(async (data) => {
+            if (exchanges.has(data.id)) {
+                const exchange = exchanges.get(data.id)
+                this.dataUtils.updateDataWithExchange(data, exchange)
+            }
+            else {
+                const commission = await this.getCommission(data.type)
+                this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
+            }
+        })
     }
 
 
     async beforeMount() {
         this.storage = await this.contractUtils.getContractStorage();
-        await this.loadData();
+        this.loadData();
         this.loadTable = false;
     }
 

@@ -1,0 +1,14 @@
+{
+    "DOMAIN_NAME": {
+      "name": "Domain name",
+      "description": "Until the domain name has been transferred by the Seller to the Buyer, SmartLink's smart contract will hold the payment. SmartLink is connected to the WHOIS database and ensures a seemless transfer for both parties."
+    },
+    "OTHER": {
+      "name": "Other",
+      "description": "Until the transferred has been confirmed by the Seller to the Buyer, SmartLink's smart contract will hold the payment."
+    },
+    "OBJECT": {
+      "name": "Object",
+      "description": "Until the object has been transferred by the Seller to the Buyer, SmartLink's smart contract will hold the payment."
+    }
+  }

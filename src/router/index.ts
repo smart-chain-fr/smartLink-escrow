@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../components/home/Home.vue';
+import Home from '@/views/home/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -17,7 +17,7 @@ const routes: RouteConfig[] = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/offers/Offers.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '@/views/offers/Offers.vue'),
     props: true
   },
   {
@@ -26,7 +26,7 @@ const routes: RouteConfig[] = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/view-offer/View-offer.vue'), 
+    component: () => import(/* webpackChunkName: "about" */ '@/views/view-offer/View-offer.vue'), 
     props: true
   },
   {
@@ -35,7 +35,7 @@ const routes: RouteConfig[] = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/admin/Admin.vue'), 
+    component: () => import(/* webpackChunkName: "about" */ '@/views/admin/Admin.vue'), 
     props: true
   }
 ];

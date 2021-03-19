@@ -12,15 +12,7 @@ var contract = Tezos.contract.at("KT1H8kLur4dn82HPD8Lu9w2g9fkWSCMTTPHt")
     .then(function (contract) {
     contract.storage()
         .then(function (storage) {
-            const ongoing_exchanges = storage.exchanges
-            const size = ongoing_exchanges.valueMap.values();
-            //console.log(size)
-            const keys = ongoing_exchanges.keyMap.keys()
-            for(const key of keys)
-            {
-                let blb = key.replace(/"/g,"")
-                
-                console.log(ongoing_exchanges.get(key.replace(/"/g,"")).paid_price.escrow.toNumber())
-            }
+            const stuff = storage.escrow_types.get("DOMAIN_NAME").then(function (commission){console.log(commission.toNumber())})
+            
         });
 });

@@ -1,6 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import offers from "../../demo-data/offers.json"
 import contractUtils from "../../contract/utils"
+import Navigation from "../../components/navigation/Navigation.vue"
 
 import { TezosToolkit } from "@taquito/taquito"
 import {
@@ -11,11 +12,16 @@ import {
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
 import { namespace } from 'vuex-class'
+import info from "../../demo-data/types-info.json"
 
 const contract = namespace('contract')
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
-@Component
+@Component({
+    components: {
+      Navigation
+    },
+  })
 export default class Sales extends Vue {
 
     public drawer = true;
@@ -29,8 +35,19 @@ export default class Sales extends Vue {
     public storage:any;
     public render = 0;
     public loadTable = true;
-    public confirmation = false
-
+    public confirmation = false;
+    public commissions_headers= ["Variable", "Percentage"]
+    public info = info;
+    public commissions = new Map();
+    public navigation = [
+        { title: 'Market place', icon: 'mdi-shopping' },
+        { title: 'Offers', icon: 'mdi-chat' },
+        { title: 'Track orders', icon: 'mdi-cube-send' },
+        { title: 'Admin', icon: 'mdi-crown' },
+        { title: 'Originate contract', icon: 'mdi-note-plus' },
+      ]
+    public right= null
+    
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
         eventHandlers: {
@@ -54,7 +71,8 @@ export default class Sales extends Vue {
     async loadItems()
     {
         this.storage = await this.contractUtils.getContractStorage();
-        console.log(this.storage)
+        this.commissions = this.contractUtils.getMap(this.storage, "escrow_types")
+        console.log(this.commissions)
         this.itemsWaitingForTransfer = this.getItems("WAITING_FOR_TRANSFER")
         this.itemsWaitingForValidation = this.getItems("WAITING_FOR_VALIDATION")
     }
@@ -64,7 +82,6 @@ export default class Sales extends Vue {
         const itemsInfo = this.contractUtils.getAllItemsForStateWithBuyer(this.storage,state)
         let data = this.data.filter(data => Array.from(itemsInfo.keys()).includes(data.id))
         data.map(data=> Object.assign(data, itemsInfo.get(data.id), {confirmation:false}));
-        console.log(data)
         return data;
        
     }

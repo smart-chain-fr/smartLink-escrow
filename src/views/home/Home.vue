@@ -1,10 +1,11 @@
 <template>
-  <v-app
-    id="inspire"
-    :style="{background: $vuetify.theme.themes.light.background}"
-  >
-    <v-main>
-      <v-container class="fill-height" fluid>
+<v-app :style="{background: $vuetify.theme.themes.light.background}"
+  
+  > 
+    <v-main >
+    
+      <v-container fill-height fluid>
+        
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
             <v-card class="elevation-12">
@@ -128,7 +129,7 @@
                             filled
                             rounded
                             dense
-                            v-model="contract"
+                            v-model="contractAddress"
                           ></v-text-field>
                           <div class="text-center">
                             <v-btn
@@ -136,9 +137,8 @@
                               color="forward"
                               rounded
                               type="submit"
-                              :disabled="contract.length < 1"
-                              
-                              @click="openContract(contract)"
+                              :disabled="contractAddress.length < 1"
+                              @click="openContract()"
                             >
                               Run contract
                             </v-btn>
@@ -160,7 +160,7 @@
         </v-row>
       </v-container>
     </v-main>
-  </v-app>
+</v-app>
 </template>
 
 <style lang="scss" scoped src="./home.scss"></style>

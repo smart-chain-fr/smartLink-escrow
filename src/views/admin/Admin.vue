@@ -1,12 +1,12 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes.light.background}">
-    <v-navigation-drawer v-model="drawer" floating app> </v-navigation-drawer>
+  <v-app :style="{ background: $vuetify.theme.themes.light.background }">
+    <Navigation :drawer="drawer"></Navigation>
     <v-app-bar
       app
-      :style="{background: $vuetify.theme.themes.light.background}"
+      :style="{ background: $vuetify.theme.themes.light.background }"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>Admin pannel</v-app-bar-title>
+      <v-toolbar-title>Admin pannel</v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
@@ -20,12 +20,9 @@
           class="mx-auto"
           type="table"
         ></v-skeleton-loader>
-        <div class="items" v-if="!loadTable">
-            <h1 class="title">Transfers awaiting confirmation</h1>
-             
-            
-            
-            
+        <section class="items" v-if="!loadTable">
+          <h1 class="title">Transfers awaiting confirmation</h1>
+
           <table>
             <thead>
               <tr>
@@ -56,15 +53,12 @@
                 <td class="text-center">{{ item.buyer }}</td>
 
                 <td class="text-center">
-                  {{ item.total }} <img
-                      :src="require(`../../assets/tezos.png`)"
-                      width="10px"
-                    />
-                  
+                  {{ item.total }}
+                  <img :src="require(`../../assets/tezos.png`)" width="10px" />
                 </td>
                 <td class="text-center">
                   <v-btn
-                  v-if="!item.confirmation"
+                    v-if="!item.confirmation"
                     depressed
                     color="main"
                     class="buy"
@@ -72,7 +66,7 @@
                   >
                     Confirm transfer
                   </v-btn>
-                   <div class="loading" v-if="item.confirmation">
+                  <div class="loading" v-if="item.confirmation">
                     <v-progress-circular
                       indeterminate
                       color="primary"
@@ -83,17 +77,16 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </section>
 
         <v-skeleton-loader
           v-if="loadTable"
           class="mx-auto"
           type="table"
         ></v-skeleton-loader>
-        <div class="items" v-if="!loadTable">
-            <h1 class="title">Exchanges waiting for validation</h1>
-                    
-            
+        <section class="items" v-if="!loadTable">
+          <h1 class="title">Exchanges waiting for validation</h1>
+
           <table>
             <thead>
               <tr>
@@ -124,11 +117,8 @@
                 <td class="text-center">{{ item.buyer }}</td>
 
                 <td class="text-center">
-                  {{ item.total }} <img
-                      :src="require(`../../assets/tezos.png`)"
-                      width="10px"
-                    />
-                  
+                  {{ item.total }}
+                  <img :src="require(`../../assets/tezos.png`)" width="10px" />
                 </td>
                 <td class="text-center">
                   <v-btn
@@ -151,7 +141,39 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </section>
+        
+        <section class="items">
+          <h1 class="title">Exchange information</h1>
+          <table>
+            <thead>
+              <tr>
+                <th v-for="header in commissions_headers" :key="header" class="text-center">
+                  {{ header }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr>
+                <td class="text-center">
+                 Global slashing Rate
+                </td>
+                <td class="text-center">{{ this.$store.state.contract.slashingRate }}</td>
+                
+              </tr>
+              <tr v-for="item in commissions" :key="item.name">
+                <td class="text-center">
+                  {{ info[item[0]].name }} commission
+                </td>
+                <td class="text-center">
+                 {{ item[1] }}
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
       </v-container>
     </v-main>
   </v-app>

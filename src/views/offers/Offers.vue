@@ -1,12 +1,12 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes.light.background }">
-    <v-navigation-drawer v-model="drawer" floating app> </v-navigation-drawer>
+     <Navigation :drawer="drawer"></Navigation>
     <v-app-bar
       app
       :style="{ background: $vuetify.theme.themes.light.background }"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>Sales</v-app-bar-title>
+      <v-toolbar-title>Offers</v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
