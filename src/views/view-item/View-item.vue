@@ -6,7 +6,8 @@
       :style="{ background: $vuetify.theme.themes.light.background }"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Offer n° {{ data.id}}</v-toolbar-title>
+      <v-toolbar-title v-if="isItemAvailable && loaded">{{ this.$route.name}} n° {{ data.id }}</v-toolbar-title>
+      <v-toolbar-title v-else-if="!isItemAvailable && loaded">Item unavailable</v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="running-contract"
         >Running contract:
@@ -25,13 +26,14 @@
             !paymentFailed
           "
         >
-          <h1 class="title" v-if="data.state.action.name">Offer n°{{ data.id }}: {{ data.state.action.name}}</h1>
-          <h1 class="title" v-else>Track the offer n°{{ data.id }}</h1>
+          <h1 class="title" v-if="this.$route.name === 'Buy item' || this.$route.name === 'Offer'">{{ this.$route.name }} n°{{ data.id }}</h1>
+          <h1 class="title" v-else>Track the order n°{{ data.id }}</h1>
           <section class="required-action" v-if="data.state.action.required">
             
                 {{ data.state.action.required}}
               
           </section>
+        
           <br v-else />
 
           <v-row justify="space-between">
@@ -249,5 +251,5 @@
   </v-app>
 </template>
 
-<script lang="ts" src="./View-offer.ts"></script>
-<style lang="scss" scoped src="./view-offer.scss"></style>
+<script lang="ts" src="./View-item.ts"></script>
+<style lang="scss" scoped src="./view-item.scss"></style>

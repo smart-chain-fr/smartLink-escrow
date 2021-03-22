@@ -32,7 +32,7 @@ export default class Buy extends Vue {
   public info = info;
 
   public id = this.$route.params.id
-  public data:any = offers.find(data => data.id === this.$route.params.id)
+  public data:any = offers.find(data => data.id === this.$route.params.id);
   public isItemAvailable = false;
   public loaded = false;
   public commission = 0
@@ -60,29 +60,25 @@ export default class Buy extends Vue {
 
   async beforeMount() {
     if (typeof this.data !== 'undefined') {
-      this.isItemAvailable = true;
+      
       this.storage = await this.contractUtils.getContractStorage()
       const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
 
-      if (exchanges.has(this.data!.id)) {
+      if ((((this.$route.name==='Buy item') && (this.data.type==='sale')) || ((this.$route.name==='Offer') && (this.data.type==='offer'))) && !exchanges.has(this.data!.id))
+      {
+        const commission = this.contractUtils.getCommissionFromContract(this.storage, this.data!.escrow_type)
+        this.dataUtils.updateDefaultData(this.data, commission, this.slashing_rate)
+        this.isItemAvailable = true;
+        
+      }
+      else if ((this.$route.name === 'Order') && exchanges.has(this.data!.id))
+      {
         const exchange = exchanges.get(this.data!.id)
         this.dataUtils.updateDataWithExchange(this.data, exchange)
+        this.isItemAvailable = true;     
       }
-      else
-      {
-        const commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.escrow_type)
-        this.dataUtils.updateDefaultData(this.data, commission, this.slashing_rate)
-      }
-      console.log(this.data)
     }
 
-   /*  console.log(this.data)
-    if (typeof this.data !== 'undefined') {
-      this.commission = await this.contractUtils.getCommissionFromContract(this.storage, this.data!.type);
-      this.slashing_rate = this.contractUtils.getSlashingRate(this.storage);
-      this.fees = this.data!.price * (this.slashing_rate / 100) + this.data!.price * (this.commission / 100)
-      this.total = this.data!.price + this.fees
-    } */
     this.loaded = true;
 
   }

@@ -22,11 +22,26 @@ const routes: RouteConfig[] = [
   },
   {
     path: '/offer/:id',
-    name: 'offer',
+    name: 'Offer',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/view-item/View-item.vue'), 
+    props: true
+  },
+  {
+    path: '/buy/:id',
+    name: 'Buy item',
     // route level code-splittings
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/view-offer/View-offer.vue'), 
+    component: () => import(/* webpackChunkName: "about" */ '@/views/view-item/View-item.vue'), 
+    props: true
+  },
+  {
+    path: '/order/:id',
+    name: 'Order',
+    // route level code-splittings
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '@/views/view-item/View-item.vue'), 
     props: true
   },
   {

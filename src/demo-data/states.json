@@ -1,33 +1,49 @@
 {
-    "default": {
+    "default_sale": {
         "name": "initialized",
         "action": {
-            "name": "Init escrow",
+            "name": "Purchase",
+            "short_description":"Available",
+            "action": "init-escrow"
+        }
+    },
+    "default_offer": {
+        "name": "initialized",
+        "action": {
+            "name": "Begin escrow",
             "short_description":"Awaiting escrow",
             "required":"This offer is awaiting for the escrow initialization. In order to start the exchange with this buyer, please put the requested amount into escrow.",
             "action": "init-escrow"
         }
+        
     },
     "WAITING_FOR_TRANSFER": {
         "name": "shipped",
-        "action": {
-            "short_description":"Awaiting seller transmission"
-        }
+       
+            "action": {
+                "short_description":"Awaiting seller transmission"
+            }
+        
+       
     },
     "WAITING_FOR_VALIDATION": {
         "name": "delivered",
-        "action": {
-            "name": "Validate Exchange",
-            "required":"Please validate the exchange once you have received the product in order to allow the seller to receive their payment.",
-            "short_description":"Awaiting validation",
-            "action": "validate"
-        }
+       
+            "action": {
+                "name": "Validate Exchange",
+                "required":"Please validate the exchange once you have received the product in order to allow the seller to receive their payment.",
+                "short_description":"Awaiting validation",
+                "action": "validate"
+            }
+        
     },
     "VALIDATED": {
         "name": "finished",
-        "action": {
-            "short_description":"Exchange successful"
-        }
+      
+            "action": {
+                "short_description":"Exchange successful"
+            }
+        
     }
 }
 

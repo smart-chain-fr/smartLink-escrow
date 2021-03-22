@@ -88,7 +88,7 @@
                     rounded
                     color="main"
                     class="buy"
-                    :href="`/offer/${item.id}`"
+                    :href="`/order/${item.id}`"
                   >
                     {{ item.state.action.name }}
                   </v-btn>
@@ -97,7 +97,7 @@
                     rounded
                     color="main"
                     class="buy"
-                    :href="`/offer/${item.id}`"
+                    :href="`/order/${item.id}`"
                   >
                     View
                   </v-btn>

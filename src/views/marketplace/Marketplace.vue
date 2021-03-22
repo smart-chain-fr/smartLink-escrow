@@ -86,7 +86,7 @@
                     rounded
                     color="main"
                     class="buy"
-                    :href="`/offer/${item.id}`"
+                    :href="`/buy/${item.id}`"
                   >
                    Buy
                   </v-btn>

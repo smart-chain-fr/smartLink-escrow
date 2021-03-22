@@ -21,7 +21,7 @@
           v-for="item in navigation"
           :key="item.title"
           link
-          :href="item.href"
+          :to="{name: item.name}"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
