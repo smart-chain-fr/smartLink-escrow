@@ -143,7 +143,15 @@
             </v-row>
           </section> -->
          
-         <section class="navigation-buttons text-right"> <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="action(data.state.action.action)" >
+         <section class="navigation-buttons text-right">  <v-btn 
+                    depressed
+                    rounded
+                    color="red"
+                    class="buy"
+                    v-if="data.state.action.name === 'Begin escrow'"
+                  >
+                   Remove
+                  </v-btn> <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="action(data.state.action.action)" >
                   {{data.state.action.name}} <v-icon right>mdi-chevron-right-circle</v-icon></v-btn
                 >
                 </section>
@@ -159,7 +167,7 @@
             color="primary"
             indeterminate
           >
-            Payment <br />in progress
+            {{this.data.state.progress}}
           </v-progress-circular>
         </div>
         <div v-if="paymentFailed" class="items text-center">
@@ -169,11 +177,11 @@
            >
             mdi-close
             </v-icon>
-            <span class="headline" color="primary">Payment failed</span>
+            <span class="headline" color="primary">{{this.data.state.failure}}</span>
             <section class="navigation-buttons">
               <v-row align="center" justify="center">
                 <v-col cols="auto">
-                  <v-btn depressed color="back" rounded :href="`/sales/`"> <v-icon left>mdi-cart-variant</v-icon> Back to sales </v-btn>
+                  <v-btn depressed color="back" rounded :to="{name: data.state.back}"> <v-icon left>mdi-cart-variant</v-icon> Back to {{data.state.back}} </v-btn>
                 </v-col>
                 <v-col cols="auto">
                   <v-btn depressed color="forward" rounded @click="action(data.state.action.action)"><v-icon left>mdi-restart</v-icon> Try again </v-btn>
@@ -186,7 +194,7 @@
             <v-col lg="5" md="12" cols="12">
               <v-icon :size="100" color="primary"> mdi-check-bold </v-icon>
               <br />
-              <span class="headline">Success</span>
+              <span class="headline">{{this.data.state.success}}</span>
               <br />
              
             </v-col>
@@ -196,7 +204,7 @@
                   <v-col cols="auto"><h2 class="overline">Summary</h2></v-col>
                   <v-col cols="auto">
                      <span class="overline"
-                >You placed {{ total }}
+                >You placed {{ data.total }}
                 <img :src="require(`../../assets/tezos.png`)" width="8px" />
                 in escrow</span
               >
@@ -226,7 +234,7 @@
                 <v-row justify="space-between">
                   <v-col cols="auto"><h2>Fees</h2></v-col>
                   <v-col cols="auto"
-                    ><span class="price">{{ fees }} </span>
+                    ><span class="price">{{ data.fees }} </span>
                     <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
@@ -235,15 +243,16 @@
                 <v-row justify="space-between" class="total">
                   <v-col cols="auto"><h2>Total</h2></v-col>
                   <v-col cols="auto"
-                    ><span class="price">{{ total }}</span>
+                    ><span class="price">{{ data.total }}</span>
                     <img :src="require(`../../assets/tezos.png`)" width="7px"
                   /></v-col>
                 </v-row>
               </section>
             </v-col>
           </v-row>
-          <v-btn depressed color="forward" rounded :href="`/sales/`">
-            <v-icon left>mdi-cart-variant</v-icon> Go back to offers
+           <br />
+          <v-btn depressed color="forward" rounded :to="{name: data.state.back}">
+            <v-icon left>mdi-cart-variant</v-icon> Go back to {{data.state.back}}
           </v-btn>
         </div>
       </v-container>

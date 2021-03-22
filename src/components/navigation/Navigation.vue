@@ -34,7 +34,7 @@
       </v-list>
       <template v-slot:append>
         <div class="text-center">
-         Powered by SmartLink
+         <!-- Powered by SmartLink -->
         </div>
       </template>
       </v-navigation-drawer>

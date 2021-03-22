@@ -22,7 +22,7 @@
         ></v-skeleton-loader>
         <section class="items" v-if="!loadTable">
           <h1 class="title">Transfers awaiting confirmation</h1>
-
+          This will be an automated process ... .
           <table>
             <thead>
               <tr>
@@ -79,7 +79,7 @@
           </table>
         </section>
 
-        <v-skeleton-loader
+       <!--  <v-skeleton-loader
           v-if="loadTable"
           class="mx-auto"
           type="table"
@@ -141,7 +141,7 @@
               </tr>
             </tbody>
           </table>
-        </section>
+        </section> -->
         
         <section class="items">
           <h1 class="title">Exchange information</h1>

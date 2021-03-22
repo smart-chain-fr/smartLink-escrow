@@ -87,7 +87,7 @@
         "date":"03/14/2021 9:28",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
         "picture": "car.png",
-        "type":"sale"
+        "type":"offer"
     },
     {
         "id":"9",
@@ -131,7 +131,7 @@
         "date":"03/15/2021 07:04",
         "seller":"tz1VLCwEegxpLH9gepjWbyqwn9w1qbcmRN3U",
         "picture": "dm.png",
-        "type":"sale"
+        "type":"offer"
     }, 
     {
         "id":"13",
@@ -164,7 +164,7 @@
         "date":"03/27/2021 18:07",
         "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
         "picture": "service.png",
-        "type":"sale"
+        "type":"offer"
     }
 ]
 
