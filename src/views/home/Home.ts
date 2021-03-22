@@ -11,6 +11,9 @@ import {
   import contractUtils from "../../contract/utils"
 
   const contract = namespace('contract')
+  const user = namespace('user')
+
+  import data from "../../demo-data/offers.json"
   const Tezos = new TezosToolkit('https://edonet.smartpy.io')
   
 @Component
@@ -32,6 +35,7 @@ export default class Home extends Vue {
     public originatingCompleted = false;
 
     public address: string | null = "";
+    public offers:any[] = data.filter((data) => data.type==="offer");;
 
     public contractAddress = ""
     @contract.Action
@@ -39,6 +43,10 @@ export default class Home extends Vue {
 
     @contract.Action
     public updateSlashingRate!: (slashingRate: number) => void
+
+    @user.Action
+    public updateNumberOfItems!: (numberOfItems: number) => void
+
 
     private wallet = new BeaconWallet({
         name: "Escrow DApp",
@@ -89,9 +97,9 @@ export default class Home extends Vue {
         this.originating = true;
         
         const contract = await originationOp.contract();
-        this.updateContract(contract.address)
         this.contractAddress = contract.address
         const storage:any = await contract.storage()
+        this.updateContract(contract.address)
         this.updateSlashingRate(storage.slashing_rate)
         this.originating = false;
         this.originatingCompleted = true;
@@ -100,15 +108,17 @@ export default class Home extends Vue {
     async openContract()
     {
       const cutils = new contractUtils(this.contractAddress)
-      this.updateContract(this.contractAddress)
       const storage = await cutils.getContractStorage();
       const slashing_rate = cutils.getSlashingRate(storage)
+      this.updateContract(this.contractAddress)
       this.updateSlashingRate(slashing_rate)
       this.$router.push('offers')
     }
 
     beforeMount()
     {
+      const nbOffers = this.offers.length;
+      this.updateNumberOfItems(nbOffers);
       (this.$store.state.contract.contractAddress)?this.contractAddress = this.$store.state.contract.contractAddress : ""
     }
 

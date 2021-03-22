@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in filteredEvents()" :key="item.name">
+              <tr v-for="item in filteredEvents()" :key="item.id">
                 <td>
                   <v-row align="center">
                     <v-col cols="auto">

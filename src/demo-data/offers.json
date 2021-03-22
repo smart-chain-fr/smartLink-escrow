@@ -110,7 +110,8 @@
         "seller":"tz1cwGC49XrqwZ1CAK7ZV3ymvyvhhpybFqyb",
         "picture": "service.png",
         "type":"sale"
-    },{
+    },
+    {
         "id":"11",
         "name": "domain_name12.com",
         "escrow_type":"DOMAIN_NAME",

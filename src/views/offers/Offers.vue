@@ -47,10 +47,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in filteredEvents()" :key="item.name">
+              <tr v-for="item in filteredEvents()" :key="item.id">
+                
                 <td>
                   <v-row align="center">
                     <v-col cols="auto">
+                      <v-chip
+                        label
+                        small
+                      >
+                        new
+                      </v-chip>
+                       </v-col>
+                       <v-col cols="auto">
                       <img
                         :src="require(`../../assets/${item.picture}`)"
                         aspect-ratio="1"
@@ -94,12 +103,13 @@
                 <td class="text-center">
                   <v-btn 
                     depressed
-                    rounded
+                    fab
+                    small
                     color="red"
                     class="buy"
                     :href="`/offer/${item.id}`"
                   >
-                   Remove
+                   <v-icon>mdi-close</v-icon>
                   </v-btn>
                 </td>
               </tr>
