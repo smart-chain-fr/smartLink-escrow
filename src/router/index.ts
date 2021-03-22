@@ -6,8 +6,9 @@ Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: '/',
-    name: 'home',
+    path: '/originate',
+    alias: '/',
+    name: 'originate',
     component: Home,
     props: true
   },
@@ -78,5 +79,24 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.name!=='originate') {
+    if((typeof localStorage.getItem('vuex') === 'undefined') || (localStorage.getItem('vuex') === null))
+        {
+          next({ name: 'originate' })
+        }
+        else
+        {
+          const contract = JSON.parse(localStorage.getItem('vuex')!).contract;
+          if((typeof contract === 'undefined') || (contract === null) || (typeof contract.contractAddress === 'undefined') || (contract.contractAddress === null) || (contract.contractAddress.length < 1))
+          {
+            next({ name: 'originate' })
+          }
+          else next () 
+        }
+      }
+    else next()
+})
 
 export default router;

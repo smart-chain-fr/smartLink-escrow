@@ -9,7 +9,7 @@ export default class Navigation extends Vue {
         { title: 'Offers', icon: 'mdi-chat', name:'offers' },
         { title: 'Track orders', icon: 'mdi-cube-send', name:'orders' },
         { title: 'Admin', icon: 'mdi-crown', name:'admin' },
-        /* { title: 'Originate contract', icon: 'mdi-note-plus', name:'' }, */
+         { title: 'Originate contract', icon: 'mdi-note-plus', name:'originate' }, 
       ]
 
 }
