@@ -28,7 +28,8 @@ export default class Sales extends Vue {
     public states: any = states;
     public error = false;
     public headers = ["Product", "Seller", "State", "Total", ""];
-    public period: string | null = "";
+    public offers_period: string | null = "";
+    public purchases_period: string | null = "";
     public commissions_temp = new Map()
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
     public dataUtils = new dataUtils();
@@ -42,7 +43,7 @@ export default class Sales extends Vue {
             commission = this.commissions_temp.get(data_type)
         }
         else {
-            commission = this.contractUtils.getCommissionFromContract(this.storage, data_type);
+            commission = this.contractUtils.getCommission(this.storage, data_type);
             this.commissions_temp.set(data_type, commission)
         }
 
@@ -67,20 +68,22 @@ export default class Sales extends Vue {
         this.loadTable = false;
     }
 
-    filteredEvents() {
+    filteredEvents(type:string) {
         const today = moment();
-
-        if (this.period == "day") {
-            return this.data.filter(data => moment(data.date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
+        const data = this.data.filter(data => data.type === type)
+        const period = (type === 'offer')? this.offers_period:this.purchases_period
+        
+        if (period == "day") {
+            return data.filter(data => moment(data.date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
         }
-        else if (this.period == "week") {
-            return this.data.filter(data => today.isoWeek() === moment(data.date).isoWeek())
+        else if (period == "week") {
+            return data.filter(data => today.isoWeek() === moment(data.date).isoWeek())
         }
-        else if (this.period == "month") {
-            return this.data.filter(data => moment(data.date).toISOString().substr(0, 7) === today.toISOString().substr(0, 7))
+        else if (period == "month") {
+            return data.filter(data => moment(data.date).toISOString().substr(0, 7) === today.toISOString().substr(0, 7))
         }
         else {
-            return this.data
+            return data
         }
 
     }

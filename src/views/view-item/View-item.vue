@@ -149,6 +149,9 @@
                     color="red"
                     class="buy"
                     v-if="data.state.action.name === 'Begin escrow'"
+                    
+                    :href="/offers/"
+                    @click="removeItem(data.id)"
                   >
                    Remove
                   </v-btn> <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="action(data.state.action.action)" >

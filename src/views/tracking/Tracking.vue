@@ -23,13 +23,13 @@
         <div class="items" v-if="!loadTable">
           <v-row class="table-title" align="center">
             <v-col cols="auto"
-              ><span class="title">Recent offers</span>
+              ><span class="title">Accepted offers</span>
              
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="auto">
               Filter by:
-              <v-btn-toggle v-model="period" color="main" class="filter" group>
+              <v-btn-toggle v-model="offers_period" color="main" class="filter" group>
                 <v-btn value="day"> Day </v-btn>
 
                 <v-btn value="week"> Week </v-btn>
@@ -47,7 +47,94 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in filteredEvents()" :key="item.name">
+              <tr v-for="item in filteredEvents('offer')" :key="item.id">
+                <td>
+                  <v-row align="center">
+                    <v-col cols="auto">
+                      <img
+                        :src="require(`../../assets/${item.picture}`)"
+                        aspect-ratio="1"
+                        width="55px"
+                      />
+                    </v-col>
+                    <v-col cols="auto"
+                      ><span class="name">{{ item.name }}</span
+                      ><br /><span class="date"
+                        >Last update:
+                        {{ new Date(item.date).toLocaleString() }}</span
+                      ></v-col
+                    ></v-row
+                  >
+                </td>
+                <td class="text-center">{{ item.seller }}</td>
+                <td class="text-center"><v-chip class="chip" :color="`${item.state.name}`">
+                      {{ item.state.name }}
+                    </v-chip></td>
+                <td class="text-center">
+                  {{ item.total }}
+                  <img :src="require(`../../assets/tezos.png`)" width="10px" />
+                  <br />
+                  <span class="fees"
+                    >(Fees: {{ item.fees }}
+                    <img
+                      :src="require(`../../assets/tezos.png`)"
+                      width="6px"
+                    />)</span
+                  >
+                </td>
+                <td class="text-center">
+                  <v-btn v-if="item.state.action.name"
+                    depressed
+                    rounded
+                    color="main"
+                    class="buy"
+                    :href="`/order/${item.id}`"
+                  >
+                    {{ item.state.action.name }}
+                  </v-btn>
+                  <v-btn v-else
+                    depressed
+                    rounded
+                    color="main"
+                    class="buy"
+                    :href="`/order/${item.id}`"
+                  >
+                    View
+                  </v-btn>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+        <div class="items" v-if="!loadTable">
+          <v-row class="table-title" align="center">
+            <v-col cols="auto"
+              ><span class="title">Purchased items</span>
+             
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col cols="auto">
+              Filter by:
+              <v-btn-toggle v-model="purchases_period" color="main" class="filter" group>
+                <v-btn value="day"> Day </v-btn>
+
+                <v-btn value="week"> Week </v-btn>
+
+                <v-btn value="month"> Month </v-btn>
+              </v-btn-toggle>
+            </v-col></v-row
+          >
+          <table>
+            <thead>
+              <tr>
+                <th v-for="header in headers" :key="header" class="text-center">
+                  {{ header }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in filteredEvents('sale')" :key="item.id">
                 <td>
                   <v-row align="center">
                     <v-col cols="auto">

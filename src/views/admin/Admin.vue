@@ -32,7 +32,7 @@
               </tr>
             </thead>
             <tbody :key="render">
-              <tr v-for="item in itemsWaitingForTransfer" :key="item.name">
+              <tr v-for="item in itemsWaitingForTransfer" :key="item.id">
                 <td>
                   <v-row align="center">
                     <v-col cols="auto">
@@ -53,7 +53,7 @@
                 <td class="text-center">{{ item.buyer }}</td>
 
                 <td class="text-center">
-                  {{ item.total }}
+                  {{ item.paid_price.escrow/1000000 }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
                 </td>
                 <td class="text-center">
@@ -96,7 +96,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in itemsWaitingForValidation" :key="item.name">
+              <tr v-for="item in itemsWaitingForValidation" :key="item.id">
                 <td>
                   <v-row align="center">
                     <v-col cols="auto">
@@ -161,7 +161,7 @@
                 <td class="text-center">{{ this.$store.state.contract.slashingRate }}</td>
                 
               </tr>
-              <tr v-for="item in commissions" :key="item.name">
+              <tr v-for="item in commissions" :key="item.id">
                 <td class="text-center">
                   {{ info[item[0]].name }} commission
                 </td>

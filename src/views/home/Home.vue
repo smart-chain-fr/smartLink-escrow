@@ -106,7 +106,7 @@
                                 depressed
                                 color="forward"
                                 rounded
-                                :href="`/offers/`"
+                                :href="`/marketplace/`"
                               >
                                 Go to escrow
                               </v-btn>

@@ -1,6 +1,13 @@
-import { TezosToolkit } from "@taquito/taquito"
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module manages the utility functions for smart contract interactions
+ */
 
-const Tezos = new TezosToolkit("https://edonet.smartpy.io")
+import { TezosToolkit } from "@taquito/taquito" // Allows to interact with the smart contract
+
+const Tezos = new TezosToolkit("https://edonet.smartpy.io") // Uses the RPC of the EDO network
 
 export default class contractUtils {
     public contractAddress: string;
@@ -9,53 +16,60 @@ export default class contractUtils {
         this.contractAddress = contractAddress
     }
 
+    /**
+    * Function that gets the contract and retrieves its storage
+    * @returns {Object} - smart contract's storage
+    */
     public async getContractStorage() {
         const contract = await Tezos.contract.at(this.contractAddress);
         const storage: any = await contract.storage();
         return storage;
     }
 
+    /**
+    * Function that retrieves the slashing rate of a smart contract
+    * @param {any} storage - smart contract's storage to parse
+    * @returns {number} - smart contract's slashing rate
+    */
     public getSlashingRate(storage: any) {
-        const slashing_rate = storage.slashing_rate.toNumber();
-        return slashing_rate;
+        return storage.slashing_rate.toNumber();
     }
 
-    public getCommissionFromContract(storage: any, escrow_type: string) {
+    /**
+    * Function that retrieves the commission for a given escrow_type
+    * @param {any} storage - smart contract's storage to parse
+    * @param {string} escrow_type - type of the escrow
+    * @returns {number} - smart contract's slashing rate
+    */
+    public getCommission(storage: any, escrow_type: string) {
         const commission = storage.escrow_types.get(escrow_type);
         return commission.toNumber();
     }
 
-    public getMap(storage: any, data_name:string) {
+    /**
+    * Function that retrieves the data of the given 
+    * @param {any} storage - smart contract's storage to parse
+    * @param {string} data_name - name of the state variable to retrieve
+    * @returns {Map} - map with all the items of the state variable
+    */
+    public getMap(storage: any, data_name: string) {
         let items = new Map()
 
+        // Retrieve the map from the storage
         const data = storage[data_name]
+        // Get all the keys of the map
         const keys = data.keyMap.keys()
 
+        // For each key, get the value
         for (let key of keys) {
 
-            key = key.replace(/"/g, "")
+            key = key.replace(/"/g, "") // Strip the quotes from the key
             let item = data.get(key)
+
+            // If the item exists, append it to the map
             if (typeof item !== 'undefined') {
                 items.set(key, item)
             }
-        }
-        return items;
-    }  
-
-    public getAllItemsForStateWithBuyer(storage: any, state: string) {
-        //let items : Array<string> = []
-        let items = new Map()
-        const ongoing_exchanges = storage.exchanges
-        const keys = ongoing_exchanges.keyMap.keys()
-        for (const key of keys) {
-            let item = ongoing_exchanges.get(key.replace(/"/g, ""))
-            if (typeof item !== 'undefined') {
-                if (item.state === state) {
-                    //items.push(key.replace(/"/g,""))
-                    items.set(key.replace(/"/g, ""), { buyer: item.buyer, total: item.paid_price.escrow.toNumber() / 1000000, update: new Date(item.lastUpdate).toLocaleString() })
-                }
-            }
-
         }
 
         return items;
