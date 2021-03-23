@@ -71,7 +71,7 @@ export default class Buy extends Vue {
 
       if ((((this.$route.name==='Buy item') && (this.data.type==='sale')) || ((this.$route.name==='Offer') && (this.data.type==='offer'))) && !exchanges.has(this.data!.id))
       {
-        const commission = this.contractUtils.getCommissionFromContract(this.storage, this.data!.escrow_type)
+        const commission = this.contractUtils.getCommission(this.storage, this.data!.escrow_type)
         this.dataUtils.updateDefaultData(this.data, commission, this.slashing_rate)
         this.isItemAvailable = true;
         

@@ -79,7 +79,7 @@ export default class Sales extends Vue {
     
     getItems(state:string)
     {
-        const itemsInfo = this.contractUtils.getAllItemsForStateWithBuyer(this.storage,state)
+        const itemsInfo = this.contractUtils.getMap(this.storage,'exchanges')
         let data = this.data.filter(data => Array.from(itemsInfo.keys()).includes(data.id))
         data.map(data=> Object.assign(data, itemsInfo.get(data.id), {confirmation:false}));
         return data;

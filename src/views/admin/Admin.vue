@@ -53,7 +53,7 @@
                 <td class="text-center">{{ item.buyer }}</td>
 
                 <td class="text-center">
-                  {{ item.total }}
+                  {{ item.paid_price.escrow/1000000 }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
                 </td>
                 <td class="text-center">

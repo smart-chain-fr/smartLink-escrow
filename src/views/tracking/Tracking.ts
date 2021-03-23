@@ -43,7 +43,7 @@ export default class Sales extends Vue {
             commission = this.commissions_temp.get(data_type)
         }
         else {
-            commission = this.contractUtils.getCommissionFromContract(this.storage, data_type);
+            commission = this.contractUtils.getCommission(this.storage, data_type);
             this.commissions_temp.set(data_type, commission)
         }
 
