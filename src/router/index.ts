@@ -82,21 +82,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.name!=='originate') {
-    if((typeof localStorage.getItem('vuex') === 'undefined') || (localStorage.getItem('vuex') === null))
-        {
-          next({ name: 'originate' })
-        }
-        else
-        {
-          const contract = JSON.parse(localStorage.getItem('vuex')!).contract;
-          if((typeof contract === 'undefined') || (contract === null) || (typeof contract.contractAddress === 'undefined') || (contract.contractAddress === null) || (contract.contractAddress.length < 1))
-          {
-            next({ name: 'originate' })
-          }
-          else next () 
-        }
-      }
+    const contract = (localStorage.getItem('vuex') !== null && typeof localStorage.getItem('vuex') !== undefined)?JSON.parse(localStorage.getItem('vuex')!).contract:null;
+    const contractAddress = (contract !== null && typeof contract !== undefined)?contract.contractAddress:null;
+    if(contractAddress === null || typeof contractAddress === undefined )
+    { next({ name: 'originate' })}
     else next()
+  }
+  else next()
 })
 
 export default router;

@@ -51,14 +51,6 @@
                 
                 <td>
                   <v-row align="center">
-                    <v-col cols="auto">
-                      <v-chip
-                        label
-                        small
-                      >
-                        new
-                      </v-chip>
-                       </v-col>
                        <v-col cols="auto">
                       <img
                         :src="require(`../../assets/${item.picture}`)"
@@ -72,7 +64,17 @@
                         >Last update:
                         {{ new Date(item.date).toLocaleString() }}</span
                       ></v-col
-                    ></v-row
+                    >
+                    <v-col cols="auto">
+                      <v-chip
+                        label
+                        small
+                        v-if="isUnviewed(item.id)"
+                      >
+                        new
+                      </v-chip>
+                       </v-col>
+                    </v-row
                   >
                 </td>
                 <td class="text-center">{{ item.seller }}</td>
@@ -96,6 +98,7 @@
                     color="main"
                     class="buy"
                     :href="`/offer/${item.id}`"
+                    @click="updateNotification(item.id)"
                   >
                    View
                   </v-btn>
@@ -107,7 +110,7 @@
                     small
                     color="red"
                     class="buy"
-                    :href="`/offer/${item.id}`"
+                    @click="removeItem(item.id)"
                   >
                    <v-icon>mdi-close</v-icon>
                   </v-btn>

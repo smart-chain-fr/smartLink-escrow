@@ -11,13 +11,15 @@ import { namespace } from 'vuex-class'
 import Navigation from '@/components/navigation/Navigation.vue';
 
 const contract = namespace('contract')
+const user = namespace('user')
+
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component({
     components: {
-      Navigation
+        Navigation
     },
-  })
+})
 export default class Sales extends Vue {
 
     public drawer = true;
@@ -27,12 +29,19 @@ export default class Sales extends Vue {
     public data = offers;
     public states: any = states;
     public error = false;
-    public headers = ["Product", "Seller", "Total", "",""];
+    public headers = ["Product", "Seller", "Total", "", ""];
     public period: string | null = "";
     public commissions_temp = new Map()
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
     public dataUtils = new dataUtils();
     public storage: any;
+
+    @user.Action
+    public updateViewed!: (item: string) => void
+
+    @user.Action
+    public updateRemoved!: (item: string) => void
+    
 
     getCommission(data_type: string) {
         let commission = 0;
@@ -50,23 +59,9 @@ export default class Sales extends Vue {
 
     }
 
-/*     loadData() {
-        const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data.map(async (data) => {
-            if (exchanges.has(data.id)) {
-                const exchange = exchanges.get(data.id)
-                this.dataUtils.updateDataWithExchange(data, exchange)
-            }
-            else {
-                const commission = await this.getCommission(data.escrow_type)
-                this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
-            }
-        })
-    }
- */
     loadData() {
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="offer")
+        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type === "offer" && !this.$store.state.user.removed.includes(data.id))
         console.log(this.data)
         this.data.map((data) => {
             const commission = this.getCommission(data.escrow_type)
@@ -96,6 +91,19 @@ export default class Sales extends Vue {
             return this.data
         }
 
+    }
+
+    updateNotification(id:string) {
+        if(!this.$store.state.user.viewed.includes(id)) this.updateViewed(id);
+    } 
+    
+    isUnviewed(id:string){
+        return !this.$store.state.user.viewed.includes(id)
+    }
+
+    removeItem(id:string){
+        if(!this.$store.state.user.removed.includes(id)) this.updateRemoved(id);
+        this.loadData()
     }
 
 }

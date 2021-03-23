@@ -16,6 +16,8 @@ import { namespace } from 'vuex-class'
 import Navigation from '@/components/navigation/Navigation.vue';
 
 const contract = namespace('contract')
+const user = namespace('user')
+
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component({
@@ -43,6 +45,9 @@ export default class Buy extends Vue {
   public isPaymentSuccessful = false;
   public paymentFailed = false;
   public dataUtils = new dataUtils()
+  
+  @user.Action
+  public updateRemoved!: (item: string) => void
 
   private wallet = new BeaconWallet({
     name: "Escrow DApp",
@@ -123,5 +128,10 @@ export default class Buy extends Vue {
     )
   }
 
+  removeItem(id:string)
+  {
+    console.log('blel')
+    if(!this.$store.state.user.removed.includes(id)) this.updateRemoved(id);
+  }
 
 }

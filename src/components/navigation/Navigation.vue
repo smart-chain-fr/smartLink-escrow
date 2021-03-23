@@ -23,13 +23,18 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title v-if="item.name === 'offers'">
+          <v-list-item-title :key="nbNew" v-if="item.name === 'offers' && nbNew > 0">
+             <v-row> <v-col cols=12 lg=4>
             {{ item.title }}
-            <v-chip label small> {{ nbNew}} </v-chip></v-list-item-title
+            </v-col>
+            <v-col cols=12 lg=8>
+            <div class="notification"> {{ nbNew}} </div>
+            </v-col></v-row>
+            </v-list-item-title
           >
           <v-list-item-title v-else>
             {{ item.title }}
-            </v-list-item-title
+          </v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
