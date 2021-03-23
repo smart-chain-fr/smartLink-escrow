@@ -121,7 +121,7 @@ export default class Home extends Vue {
     this.checkLocalStorage()
     this.updateContract(this.contractAddress)
     this.updateSlashingRate(slashing_rate)
-    this.$router.push('offers')
+    this.$router.push('marketplace')
   }
 
   checkLocalStorage() {
